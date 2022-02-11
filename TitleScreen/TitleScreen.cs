@@ -9,11 +9,11 @@ namespace TitleScreen
         private GraphicsDeviceManager _graphics;
         private SpriteBatch spriteBatch;
 
+        private SpriteFont bangers;
+        private SaloonSprite saloon;
+        private ChestSprite chest;
         private StickmanSprite stickman;
         private BatSprite[] bats;
-        private SpriteFont bangers;
-        private Texture2D saloon;
-        private Texture2D chest;
 
         public TitleScreen()
         {
@@ -24,27 +24,27 @@ namespace TitleScreen
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             stickman = new StickmanSprite() { Position = new Vector2(100, 340), };
             bats = new BatSprite[]
             {
                 new BatSprite(){ Position = new Vector2(320, 250), Horizontal = Direction.Right},
                 new BatSprite() { Position = new Vector2(300, 220), Horizontal = Direction.Left},
             };
-
+            chest = new ChestSprite();
+            saloon = new SaloonSprite();
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            // TODO: use this.Content to load your game content here
             stickman.LoadContent(Content);
             foreach (var bat in bats) bat.LoadContent(Content);
-            saloon = Content.Load<Texture2D>("Pixel Saloon");
-            chest = Content.Load<Texture2D>("Chest");
+            chest.LoadContent(Content);
+            saloon.LoadContent(Content);
 
             bangers = Content.Load<SpriteFont>("bangers");
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
@@ -55,6 +55,9 @@ namespace TitleScreen
             stickman.Update(gameTime);
             foreach (var bat in bats) bat.Update(gameTime);
 
+            chest.Update(gameTime, new Vector2(100, GraphicsDevice.PresentationParameters.Bounds.Height - 64));
+            saloon.Update(gameTime, new Vector2(500, GraphicsDevice.PresentationParameters.Bounds.Height - 256));
+
             base.Update(gameTime);
         }
 
@@ -64,9 +67,8 @@ namespace TitleScreen
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(saloon, new Vector2(500, GraphicsDevice.PresentationParameters.Bounds.Height - 256), new Rectangle(0, 0, 256, 256), Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
-            spriteBatch.Draw(chest, new Vector2(100, GraphicsDevice.PresentationParameters.Bounds.Height - 64), new Rectangle(0, 0, 64, 64), Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
-
+            saloon.Draw(gameTime, spriteBatch);
+            chest.Draw(gameTime, spriteBatch);
             stickman.Draw(gameTime, spriteBatch);
             foreach (var bat in bats) bat.Draw(gameTime, spriteBatch);
 
