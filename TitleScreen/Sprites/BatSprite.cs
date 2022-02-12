@@ -14,17 +14,25 @@ namespace TitleScreen.Sprites
     /// </summary>
     public class BatSprite : Sprite
     {
-        private Texture2D texture;
+
         private double hDirectionTimer;
         private double vDirectionTimer;
         private double animationTimer;
         private short animationFrame;
+
+        public short DirectionTime = 0;
 
         /// <summary>
         /// The direction of the bat
         /// </summary>
         public Direction Horizontal;
         public Direction Veritcle;
+
+        public BatSprite()
+        {
+            pixelWidth = 32;
+            pixelHeight = 32;
+        }
 
         /// <summary>
         /// Loads the bat sprite texture
@@ -33,6 +41,15 @@ namespace TitleScreen.Sprites
         public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("32x32-bat-sprite");
+            if(ScreenValues.GameState.TitleScreen == ScreenValues.State)
+            {
+                DirectionTime = 3;
+            }
+            else if (DirectionTime == 0)
+            {
+                Random rnd = new Random();
+                DirectionTime = (short)rnd.Next(2, 6);
+            }
         }
 
         /// <summary>
@@ -47,7 +64,7 @@ namespace TitleScreen.Sprites
             vDirectionTimer += gameTime.ElapsedGameTime.TotalSeconds;
             hDirectionTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (hDirectionTimer > 3.0)
+            if (hDirectionTimer > DirectionTime)
             {
                 switch (Horizontal)
                 {
@@ -66,7 +83,7 @@ namespace TitleScreen.Sprites
 
 
                 }
-                hDirectionTimer -= 3;
+                hDirectionTimer -= DirectionTime;
             }
             if (vDirectionTimer > 1.0)
             {
@@ -124,7 +141,7 @@ namespace TitleScreen.Sprites
             }
 
             //Draw the sprite
-            var source = new Rectangle(animationFrame * 32, (int)Horizontal * 32, 32, 32);
+            var source = new Rectangle(animationFrame * pixelWidth, (int)Horizontal * pixelHeight, pixelWidth, pixelHeight);
             spriteBatch.Draw(texture, Position, source, Color.White);
         }
     }

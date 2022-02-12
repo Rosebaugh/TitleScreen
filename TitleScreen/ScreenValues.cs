@@ -6,7 +6,9 @@ namespace TitleScreen
 {
     public enum Treasure
     {
-        Gun = 0
+        Empty = 0,
+        Gun = 1,
+        Coin = 2
     }
     public enum Direction
     {
@@ -20,6 +22,12 @@ namespace TitleScreen
         Left = 3,
         Right = 1
         */
+    }
+    public enum SpawnLocation
+    {
+        Right = 0,
+        Center = 1,
+        Left = 2
     }
     public static class ScreenValues
     {
@@ -36,8 +44,10 @@ namespace TitleScreen
             Scroll = 0,
             NewTerrain = 1,
             CollectItems = 2,
-            Shoot = 3,
-            Completed = 4
+            PickUp = 3,
+            Shoot = 4,
+            Fight = 5,
+            Completed = 6
         }
 
         public enum Areas 
@@ -57,10 +67,12 @@ namespace TitleScreen
             CurrentScreen = Areas.Blank;
             ScreenWidth = 0;
             ScreenHeight = 0;
+            SickmanSpawnLocation = SpawnLocation.Center;
         }
         public static GameState State { get; set; } = GameState.TitleScreen;
-        private static Tutorial tutorial = 0;
+        public static Tutorial tutorial = 0;
         public static Areas CurrentScreen = Areas.Blank;
+        public static SpawnLocation SickmanSpawnLocation = SpawnLocation.Center;
         //public static Areas NextScreen;
 
         public static int ScreenWidth;
@@ -73,6 +85,7 @@ namespace TitleScreen
             {
                 case GameState.TitleScreen:
                     CurrentScreen = Areas.Blank;
+                    State = GameState.Tutorial;
                     break;
                 case GameState.Tutorial:
                     CurrentScreen = newTutorial();
@@ -97,15 +110,43 @@ namespace TitleScreen
                 case Tutorial.CollectItems:
                     tutorial += 1;
                     break;
+                case Tutorial.PickUp:
+                    tutorial += 1;
+                    break;
                 case Tutorial.Shoot:
                     tutorial += 1;
+                    break;
+                case Tutorial.Fight:
+                    tutorial += 1;
+                    State = GameState.Free;
                     break;
             }
             return Areas.Blank;
         }
         private static Areas newRandomArea()
         {
-            //Still need to do
+            Random rnd = new Random();
+            int roll = (short)rnd.Next(0, 100);
+            if (roll >= 0 || roll < 69)         //Bosses
+            {
+                return Areas.Bosses;
+            }
+            if (roll >= 69 || roll < 84)         //Store
+            {
+                return Areas.Store;
+            }
+            if (roll >= 84 || roll < 94)         //Trader
+            {
+                return Areas.Trader;
+            }
+            if (roll >= 94 || roll < 99)         //Wall
+            {
+                return Areas.Wall;
+            }
+            if (roll >= 99 || roll < 100)         //Money
+            {
+                return Areas.Chest;
+            }
             return Areas.Blank;
         }
     }

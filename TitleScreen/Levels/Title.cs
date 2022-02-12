@@ -13,24 +13,22 @@ namespace TitleScreen.Levels
 {
     public class Title : Screen
     {
-        private SpriteFont bangers;
         private SaloonSprite saloon;
         private ChestSprite chest;
-        private StickmanSprite stickman;
         private BatSprite[] bats;
 
         public Title()
         {
 
         }
-        public Title(SpriteBatch spriteBatch)
+        public Title(SpriteBatch spriteBatch, StickmanSprite Stickman)
         {
             this.spriteBatch = spriteBatch;
+            this.stickman = Stickman;
         }
 
         public override void Initialize()
         {
-            stickman = new StickmanSprite() { Position = new Vector2(100, 340) };
             bats = new BatSprite[]
             {
                 new BatSprite(){ Position = new Vector2(320, 250), Horizontal = Direction.Right},

@@ -15,6 +15,21 @@ namespace TitleScreen.Sprites
         public Vector2 Position;
 
         /// <summary>
+        /// The texture of the sprite
+        /// </summary>
+        protected Texture2D texture;
+
+        /// <summary>
+        /// Width of the Sprite
+        /// </summary>
+        public int pixelWidth { get; protected set; }
+
+        /// <summary>
+        /// Height of the Sprite
+        /// </summary>
+        public int pixelHeight { get; protected set; }
+
+        /// <summary>
         /// Loads the sprite texture
         /// </summary>
         /// <param name="content">The ContentManager to load with</param>
