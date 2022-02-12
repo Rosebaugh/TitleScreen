@@ -8,29 +8,25 @@ using System.Diagnostics;
 
 namespace TitleScreen.Sprites
 {
-    public enum Treasure 
-    { 
-        Gun = 0
-    }
     /// <summary>
     /// A class representing a Chest sprite
     /// </summary>
     /// 
-    public class ChestSprite
+    public class ChestSprite : Sprite
     {
         private Texture2D texture;
         private Treasure contents;
 
-        /// <summary>
-        /// The position of the Chest
-        /// </summary>
-        public Vector2 Position;
+        public ChestSprite(Vector2 position)
+        {
+            Position = position;
+        }
 
         /// <summary>
         /// Loads the Chest sprite texture
         /// </summary>
         /// <param name="content">The ContentManager to load with</param>
-        public void LoadContent(ContentManager content)
+        public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("Chest");
         }
@@ -39,9 +35,9 @@ namespace TitleScreen.Sprites
         /// Updates the Chest sprite to fly in a pattern
         /// </summary>
         /// <param name="gameTime">The game time</param>
-        public void Update(GameTime gameTime, Vector2 position)
+        public override void Update(GameTime gameTime)
         {
-            Position = position;
+
         }
 
         /// <summary>
@@ -49,7 +45,7 @@ namespace TitleScreen.Sprites
         /// </summary>
         /// <param name="gameTime">The game time</param>
         /// <param name="spriteBatch">The SpriteBatch to draw with</param>
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, Position, new Rectangle(0, 0, 64, 64), Color.White, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
         }

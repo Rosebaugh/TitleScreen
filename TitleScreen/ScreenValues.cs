@@ -4,7 +4,23 @@ using System.Text;
 
 namespace TitleScreen
 {
-
+    public enum Treasure
+    {
+        Gun = 0
+    }
+    public enum Direction
+    {
+        Down = 0,
+        Right = 1,
+        Up = 2,
+        Left = 3
+        /*
+        Up = 2,
+        Down = 0,
+        Left = 3,
+        Right = 1
+        */
+    }
     public static class ScreenValues
     {
         public enum GameState 

@@ -12,6 +12,8 @@ namespace TitleScreen
         private GraphicsDeviceManager _graphics;
         private SpriteBatch spriteBatch;
 
+        public StickmanSprite Stickman;
+
         private Screen currentScreen;
 
         public TitleScreen()
@@ -30,13 +32,13 @@ namespace TitleScreen
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
+
+            ScreenValues.ScreenWidth = GraphicsDevice.PresentationParameters.Bounds.Width;
+            ScreenValues.ScreenHeight = GraphicsDevice.PresentationParameters.Bounds.Height;
             currentScreen = new Title(spriteBatch);
             Pause.LoadContent(Content);
             currentScreen.Initialize();
             currentScreen.LoadContent(Content);
-
-            ScreenValues.ScreenWidth = GraphicsDevice.PresentationParameters.Bounds.Width;
-            ScreenValues.ScreenHeight = GraphicsDevice.PresentationParameters.Bounds.Height;
         }
 
         public void LoadNewScreen()
@@ -45,7 +47,7 @@ namespace TitleScreen
             switch (ScreenValues.CurrentScreen)
             {
                 case ScreenValues.Areas.Blank:
-                    currentScreen = new Title(spriteBatch);
+                    currentScreen = new Blank(spriteBatch);
                     currentScreen.Initialize();
                     currentScreen.LoadContent(Content);
                     break;
