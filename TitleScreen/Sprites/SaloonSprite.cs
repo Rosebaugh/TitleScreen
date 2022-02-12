@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using System.Diagnostics;
 
-namespace TitleScreen
+namespace TitleScreen.Sprites
 {
     /// <summary>
     /// A class representing a Chest sprite

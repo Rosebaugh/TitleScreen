@@ -36,33 +36,33 @@ namespace TitleScreen
     /// <summary>
     /// A class representing a Man sprite
     /// </summary>
-    public class StickmanSprite
+    public static class StickmanSprite
     {
-        private Texture2D texture;
-        private double directionTimer;
-        private double animationTimer;
-        private short animationFrame;
+        private static Texture2D texture;
+        private static double directionTimer;
+        private static double animationTimer;
+        private static short animationFrame;
 
         /// <summary>
         /// The direction of the Man
         /// </summary>
-        public ManDirection Direction;
+        public static ManDirection Direction;
 
         /// <summary>
         /// The Animation Frame of the Man
         /// </summary>
-        public AnimationFrame AnimationFrame;
+        public static AnimationFrame AnimationFrame;
 
         /// <summary>
         /// The position of the Man
         /// </summary>
-        public Vector2 Position;
+        public static Vector2 Position;
 
         /// <summary>
         /// Loads the Stickman sprite texture
         /// </summary>
         /// <param name="content">The ContentManager to load with</param>
-        public void LoadContent(ContentManager content)
+        public static void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("Man");
         }
@@ -71,7 +71,7 @@ namespace TitleScreen
         /// Updates the Man sprite to fly in a pattern
         /// </summary>
         /// <param name="gameTime">The game time</param>
-        public void Update(GameTime gameTime)
+        public static void Update(GameTime gameTime)
         {
             //Update the Direction Timer
 
@@ -122,7 +122,7 @@ namespace TitleScreen
         /// </summary>
         /// <param name="gameTime">The game time</param>
         /// <param name="spriteManch">The SpriteManch to draw with</param>
-        public void Draw(GameTime gameTime, SpriteBatch spritebatch)
+        public static void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
             //Update animation frame
             if (ManDirection.Still != Direction)

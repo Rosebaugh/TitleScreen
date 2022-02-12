@@ -29,15 +29,27 @@ namespace TitleScreen
             Blank,
             Bosses,
             Store,
-            Money,
+            Chest,
             Trader,
             Wall,
         }
 
+        public static void ResetClass()
+        {
+            State = GameState.TitleScreen;
+            tutorial = 0;
+            CurrentScreen = Areas.Blank;
+            ScreenWidth = 0;
+            ScreenHeight = 0;
+        }
         public static GameState State { get; set; } = GameState.TitleScreen;
         private static Tutorial tutorial = 0;
         public static Areas CurrentScreen = Areas.Blank;
         //public static Areas NextScreen;
+
+        public static int ScreenWidth;
+        public static int ScreenHeight;
+
 
         public static void NewArea()
         {

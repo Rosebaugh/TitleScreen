@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using TitleScreen.Levels;
+using TitleScreen.Sprites;
+
 namespace TitleScreen
 {
     public class TitleScreen : Game
@@ -9,11 +12,7 @@ namespace TitleScreen
         private GraphicsDeviceManager _graphics;
         private SpriteBatch spriteBatch;
 
-        private SpriteFont bangers;
-        private SaloonSprite saloon;
-        private ChestSprite chest;
-        private StickmanSprite stickman;
-        private BatSprite[] bats;
+        private Screen currentScreen;
 
         public TitleScreen()
         {
@@ -24,14 +23,6 @@ namespace TitleScreen
 
         protected override void Initialize()
         {
-            stickman = new StickmanSprite() { Position = new Vector2(100, 340), };
-            bats = new BatSprite[]
-            {
-                new BatSprite(){ Position = new Vector2(320, 250), Horizontal = Direction.Right},
-                new BatSprite() { Position = new Vector2(300, 220), Horizontal = Direction.Left},
-            };
-            chest = new ChestSprite();
-            saloon = new SaloonSprite();
             base.Initialize();
         }
 
@@ -39,24 +30,107 @@ namespace TitleScreen
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
-            stickman.LoadContent(Content);
-            foreach (var bat in bats) bat.LoadContent(Content);
-            chest.LoadContent(Content);
-            saloon.LoadContent(Content);
+            currentScreen = new Title(spriteBatch);
+            Pause.LoadContent(Content);
+            currentScreen.Initialize();
+            currentScreen.LoadContent(Content);
 
-            bangers = Content.Load<SpriteFont>("bangers");
+            ScreenValues.ScreenWidth = GraphicsDevice.PresentationParameters.Bounds.Width;
+            ScreenValues.ScreenHeight = GraphicsDevice.PresentationParameters.Bounds.Height;
+        }
+
+        public void LoadNewScreen()
+        {
+            ScreenValues.NewArea();
+            switch (ScreenValues.CurrentScreen)
+            {
+                case ScreenValues.Areas.Blank:
+                    currentScreen = new Title(spriteBatch);
+                    currentScreen.Initialize();
+                    currentScreen.LoadContent(Content);
+                    break;
+                case ScreenValues.Areas.Bosses:
+                    currentScreen = new Title(spriteBatch);
+                    currentScreen.Initialize();
+                    currentScreen.LoadContent(Content);
+                    break;
+                case ScreenValues.Areas.Chest:
+                    currentScreen = new Title(spriteBatch);
+                    currentScreen.Initialize();
+                    currentScreen.LoadContent(Content);
+                    break;
+                case ScreenValues.Areas.Store:
+                    currentScreen = new Title(spriteBatch);
+                    currentScreen.Initialize();
+                    currentScreen.LoadContent(Content);
+                    break;
+                case ScreenValues.Areas.Trader:
+                    currentScreen = new Title(spriteBatch);
+                    currentScreen.Initialize();
+                    currentScreen.LoadContent(Content);
+                    break;
+                case ScreenValues.Areas.Wall:
+                    currentScreen = new Title(spriteBatch);
+                    currentScreen.Initialize();
+                    currentScreen.LoadContent(Content);
+                    break;
+            }
+        }
+
+
+        private void screenUpdate(GameTime gameTime, KeyboardState KBstate, GamePadState GPstate)
+        {
+            currentScreen.Update(gameTime, KBstate, GPstate);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            GamePadState gps = GamePad.GetState(PlayerIndex.One);
+            KeyboardState kbs = Keyboard.GetState();
 
-            stickman.Update(gameTime);
-            foreach (var bat in bats) bat.Update(gameTime);
+            if (ScreenValues.State == ScreenValues.GameState.TitleScreen)                   //Title Screen
+            {
+                if (gps.Buttons.Start == ButtonState.Pressed || 
+                    gps.Buttons.A == ButtonState.Pressed || 
+                    kbs.IsKeyDown(Keys.Enter))                                              //Start
+                {
+                    ScreenValues.State = ScreenValues.GameState.Tutorial;
+                }
+                if (gps.Buttons.Back == ButtonState.Pressed || kbs.IsKeyDown(Keys.Escape)) //Exit
+                {
+                    Exit();
+                }
+            }
+            else if (ScreenValues.State == ScreenValues.GameState.PauseMenu)                //Paused
+            {
+                if (gps.Buttons.Start == ButtonState.Pressed || kbs.IsKeyDown(Keys.Enter))             //Continue
+                {
+                    ScreenValues.State = ScreenValues.GameState.Free;
+                }
+                else if (gps.Buttons.Back == ButtonState.Pressed || kbs.IsKeyDown(Keys.Escape))          //Quit to Main Menu
+                {
+                    ScreenValues.ResetClass();
+                    LoadContent();
+                }
+            }
+            else if (ScreenValues.State == ScreenValues.GameState.Tutorial)             //Tutorial
+            {
 
-            chest.Update(gameTime, new Vector2(100, GraphicsDevice.PresentationParameters.Bounds.Height - 64));
-            saloon.Update(gameTime, new Vector2(500, GraphicsDevice.PresentationParameters.Bounds.Height - 256));
+                if (gps.Buttons.Start == ButtonState.Pressed || kbs.IsKeyDown(Keys.Enter))         //exit Tutorial 
+                {
+                    ScreenValues.State = ScreenValues.GameState.Free;
+                }
+            }
+            else if (ScreenValues.State == ScreenValues.GameState.Free)             //Tutorial
+            {
+
+                if (gps.Buttons.Back == ButtonState.Pressed || kbs.IsKeyDown(Keys.Escape))         //exit Tutorial 
+                {
+                    ScreenValues.State = ScreenValues.GameState.PauseMenu;
+                }
+            }
+
+            screenUpdate(gameTime, Keyboard.GetState(), GamePad.GetState(PlayerIndex.One));
 
             base.Update(gameTime);
         }
@@ -67,14 +141,7 @@ namespace TitleScreen
 
             spriteBatch.Begin();
 
-            saloon.Draw(gameTime, spriteBatch);
-            chest.Draw(gameTime, spriteBatch);
-            stickman.Draw(gameTime, spriteBatch);
-            foreach (var bat in bats) bat.Draw(gameTime, spriteBatch);
-
-            spriteBatch.DrawString(bangers, "Wandering Slinger", new Vector2(100, 50), Color.Red, 0, new Vector2(0, 0), 1, SpriteEffects.None, 0);
-            spriteBatch.DrawString(bangers, "Press ESC or Back to Exit", new Vector2(300, 200), Color.Red, 0, new Vector2(0, 0), .25f, SpriteEffects.None, 0);
-
+            currentScreen.Draw(gameTime);
 
             spriteBatch.End();
 
