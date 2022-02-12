@@ -1,10 +1,14 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Content;
-using System.Diagnostics;
+
+using TitleScreen.Collisions;
+using TitleScreen.Content;
+using TitleScreen.Sprites.Items;
 
 namespace TitleScreen.Sprites
 {
@@ -15,12 +19,29 @@ namespace TitleScreen.Sprites
     public class OutlawSprite : Sprite
     {
         private double animationTimer;
-        private short animationFrame;
+        public short animationFrame;
+        private double shootTimer;
 
-        public OutlawSprite()
+        public bool Visible = false;
+        public Direction dir;
+
+        public Bullet bullet;
+
+        private BoundingRectangle bounds;
+
+        /// <summary>
+        /// The bounding volume of the sprite
+        /// </summary>
+        public BoundingRectangle Bounds => bounds;
+
+        public OutlawSprite(Vector2 position)
         {
+            Position = position;
             pixelWidth = 105;
             pixelHeight = 255;
+            this.bounds = new BoundingRectangle(Position, pixelWidth, pixelHeight);
+
+            bullet = new Bullet();
         }
 
         /// <summary>
@@ -38,7 +59,21 @@ namespace TitleScreen.Sprites
         /// <param name="gameTime">The game time</param>
         public override void Update(GameTime gameTime)
         {
+            if (Visible)
+            {
+                if (animationTimer > 0.6)
+                {
+                    shootTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
+                    if(shootTimer > 2)
+                    {
+                        bullet.dir = (this.dir == Direction.Left) ? Direction.Right : Direction.Left;
+                        bullet.Position = (this.dir == Direction.Left) ? Position : new Vector2(Position.X + pixelWidth, Position.Y);
+                        bullet.Visible = true;
+                    }
+                }
+
+            }
         }
 
         /// <summary>

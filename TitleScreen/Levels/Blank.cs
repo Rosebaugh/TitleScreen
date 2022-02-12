@@ -5,9 +5,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using TitleScreen.Content;
 using TitleScreen.Levels;
 using TitleScreen.Sprites;
+using TitleScreen.Sprites.Items;
 
 namespace TitleScreen.Levels
 {
@@ -15,6 +16,7 @@ namespace TitleScreen.Levels
     {
         private BatSprite[] bats;
         private ChestSprite chest;
+        private OutlawSprite outlaw;
 
 
         GamePadState Previousgps;
@@ -48,12 +50,14 @@ namespace TitleScreen.Levels
                 new BatSprite() { Position = new Vector2(650, 150), Horizontal = Direction.Left},
             };
             chest = new ChestSprite(new Vector2(100, ScreenValues.ScreenHeight - 64 - 20)) { contents = Treasure.Gun };
+            outlaw = new OutlawSprite(new Vector2(ScreenValues.ScreenWidth - 100, ScreenValues.ScreenHeight - 230));
         }
 
         public override void LoadContent(ContentManager Content)
         {
             foreach (var bat in bats) bat.LoadContent(Content);
             chest.LoadContent(Content);
+            outlaw.LoadContent(Content);
         }
 
         public override void Update(GameTime gameTime, KeyboardState KBstate, GamePadState GPstate)
@@ -76,7 +80,7 @@ namespace TitleScreen.Levels
                     }
                     else if (stickman.Bounds.CollidesWith(chest.content.Bounds) && ScreenValues.Tutorial.PickUp == ScreenValues.tutorial)
                     {
-                        if (((KBstate.IsKeyDown(Keys.E) && Previouskbs.IsKeyUp(Keys.E)) || (GPstate.Buttons.X == ButtonState.Pressed && Previousgps.Buttons.X != ButtonState.Pressed) ) && chest.animationFrame == 1)
+                        if (((KBstate.IsKeyDown(Keys.E) && Previouskbs.IsKeyUp(Keys.E)) || (GPstate.Buttons.X == ButtonState.Pressed && Previousgps.Buttons.X != ButtonState.Pressed)) && chest.animationFrame == 1)
                         {
                             ScreenValues.tutorial = ScreenValues.Tutorial.Shoot;
                             stickman.item = chest.content;
@@ -85,8 +89,32 @@ namespace TitleScreen.Levels
                     }
 
                 }
+                if (ScreenValues.Tutorial.Shoot == ScreenValues.tutorial)
+                {
+                    if ((GPstate.Triggers.Right > 0.75 && !(Previousgps.Triggers.Right > 0.75)) ||
+                        (KBstate.IsKeyDown(Keys.Space) && Previouskbs.IsKeyDown(Keys.Space)) && chest.animationFrame == 1)
+                    {
+                        ScreenValues.tutorial = ScreenValues.Tutorial.Fight;
+                        outlaw.Visible = true;
+                    }
+                }
+                else if (ScreenValues.Tutorial.Fight == ScreenValues.tutorial)
+                {
+                    if (stickman.item is Gun2 g2)
+                    {
+                        foreach(Bullet bullet in g2.bullets)
+                        {
+                            if (bullet.collides(outlaw.Bounds))
+                            {
+                                outlaw.animationFrame = 2;
+                            }
+                        }
+                        ScreenValues.tutorial = ScreenValues.Tutorial.Fight;
+                    }
+                }
             }
             chest.Update(gameTime);
+            outlaw.Update(gameTime);
             Previousgps = GPstate;
             Previouskbs = KBstate;
         }
@@ -126,6 +154,7 @@ namespace TitleScreen.Levels
                 else if (ScreenValues.Tutorial.Fight == ScreenValues.tutorial)
                 {
                     spriteBatch.DrawString(bangers, "SHOOT HIM FIRST", new Vector2(100, 50), Color.Red, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
+                    outlaw.Draw(gameTime, spriteBatch);
                 }
                 else if (ScreenValues.Tutorial.Completed == ScreenValues.tutorial)
                 {

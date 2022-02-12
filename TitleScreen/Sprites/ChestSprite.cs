@@ -34,7 +34,7 @@ namespace TitleScreen.Sprites
             Position = position;
             pixelWidth = 64;
             pixelHeight = 64;
-            this.bounds = new BoundingRectangle(position, pixelWidth, pixelHeight);
+            this.bounds = new BoundingRectangle(Position, pixelWidth, pixelHeight);
 
             content = new Gun2(new Vector2(Position.X + pixelWidth/2, Position.Y + 35));
         }

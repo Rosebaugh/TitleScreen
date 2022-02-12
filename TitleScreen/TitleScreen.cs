@@ -148,6 +148,7 @@ namespace TitleScreen
                 {
                     ScreenValues.State = ScreenValues.GameState.Free;
                     Stickman.item = new Gun2(new Vector2(0, 0));
+                    Stickman.item.LoadContent(Content);
                     Stickman.item.falling = false;
                 }
             }

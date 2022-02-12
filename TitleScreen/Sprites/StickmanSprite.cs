@@ -176,8 +176,11 @@ namespace TitleScreen.Sprites
             if(item != null && Direction != ManDirection.Still)
             {
                 float xdir = (Direction == ManDirection.Left) ? Position.X : Position.X + pixelWidth - 20;
-
                 item.Position = new Vector2(xdir, Position.Y + 60);
+            }
+            else if(item != null)
+            {
+                item.Update(gameTime);
             }
         }
 
