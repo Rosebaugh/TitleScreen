@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Microsoft.Xna.Framework.Media;
 using TitleScreen.Levels;
 using TitleScreen.Sprites;
 
@@ -44,6 +44,12 @@ namespace TitleScreen.Levels
             chest.LoadContent(Content);
             saloon.LoadContent(Content);
 
+            /*
+            backgroundMusic = Content.Load<Song>("DeeYan-Key-TheGame");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(backgroundMusic);
+            */
+            
             bangers = Content.Load<SpriteFont>("bangers");
         }
         public override void Update(GameTime gameTime, KeyboardState KBstate, GamePadState GPstate)

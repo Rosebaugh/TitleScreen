@@ -53,11 +53,13 @@ namespace TitleScreen
             if (Stickman.Position.X + Stickman.pixelWidth - 15 > ScreenValues.ScreenWidth)
             {
                 ScreenValues.SickmanSpawnLocation = SpawnLocation.Left;
+                Stickman.LoadNewPage();
                 return true;
             }
             else if (Stickman.Position.X - 15 < 0)
             {
                 ScreenValues.SickmanSpawnLocation = SpawnLocation.Right;
+                Stickman.LoadNewPage();
                 return true;
             }
             else

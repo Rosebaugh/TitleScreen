@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -30,6 +31,7 @@ namespace TitleScreen.Sprites
         private BoundingRectangle bounds;
 
         public SpriteEffects spriteEffects;
+        private SoundEffect hit;
 
         /// <summary>
         /// The bounding volume of the sprite
@@ -79,6 +81,14 @@ namespace TitleScreen.Sprites
             texture = content.Load<Texture2D>("Enemy");
             item.LoadContent(content);
             shootTimer = 0;
+
+            hit = content.Load<SoundEffect>("Hit_Hurt");
+        }
+
+        public void Hit()
+        {
+            animationFrame = 2;
+            hit.Play();
         }
 
         /// <summary>

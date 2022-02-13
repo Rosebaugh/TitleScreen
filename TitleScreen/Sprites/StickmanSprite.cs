@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 using TitleScreen.Collisions;
 using TitleScreen.Sprites.Items;
+using TitleScreen.Content;
 
 namespace TitleScreen.Sprites
 {
@@ -88,6 +89,17 @@ namespace TitleScreen.Sprites
         {
             texture = content.Load<Texture2D>("Man");
             this.bounds = new BoundingRectangle(Position.X + (pixelWidth/2) - 5, Position.Y, 10, pixelHeight);
+        }
+
+        public void LoadNewPage()
+        {
+            if(item is Gun2 g2)
+            {
+                foreach(Bullet bullet in g2.bullets)
+                {
+                    bullet.Visible = false;
+                }
+            }
         }
 
         /// <summary>

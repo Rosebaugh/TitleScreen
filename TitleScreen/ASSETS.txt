@@ -4,6 +4,15 @@ Content/slime.png - created by Caleb Rosebaugh for this Assignment, all rights r
 Content/Chest.png - created by Caleb Rosebaugh for this Assignment, all rights reserved
 Content/Man.png - created by Caleb Rosebaugh for this Assignment, all rights reserved
 Content/Pixel Saloon.png - created by Caleb Rosebaugh for this Assignment, all rights reserved
+Content/Gun1.png - created by Caleb Rosebaugh for this Game, all rights reserved
+Content/Gun2.png - created by Caleb Rosebaugh for this Game, all rights reserved
+Content/Enemy.png - created by Caleb Rosebaugh for this Game, all rights reserved
+Content/PIXEL.png - created by Caleb Rosebaugh for this Game, all rights reserved
+Content/Bullet.png - created by Caleb Rosebaugh for this Game, all rights reserved
+
+Content/Shoot.wav - created by Caleb Rosebaugh for this Game using the bfxr sound generator, all rights reserved
+Content/Hit_Hurt.wav - created by Caleb Rosebaugh for this Game using the bfxr sound generator, all rights reserved
+Content/Shoot.wav - created by Caleb Rosebaugh for this Game using the bfxr sound generator, all rights reserved
 
 Content/Bangers/Bangers-Regular.ttf - Bangers font created by Vernon Adams, released on Google Fonts (https://fonts.google.com/specimen/Bangers) under the Open Font License
 

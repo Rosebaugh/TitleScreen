@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,6 +16,7 @@ namespace TitleScreen.Sprites.Items
     public class Gun2 : Item
     {
         public Bullet[] bullets;
+        private SoundEffect shoot;
         public Gun2(Vector2 position)
         {
             Position = position;
@@ -39,6 +41,7 @@ namespace TitleScreen.Sprites.Items
         {
             texture = content.Load<Texture2D>("Gun2");
             foreach (Bullet bullet in bullets) bullet.LoadContent(content);
+            shoot = content.Load<SoundEffect>("Shoot");
         }
 
         public void Shoot()
@@ -48,7 +51,8 @@ namespace TitleScreen.Sprites.Items
                 if (!bullet.Visible)
                 {
                     bullet.Visible = true;
-                    bullet.Position = (spriteEffect == SpriteEffects.FlipHorizontally) ? Position += new Vector2(0, -13) : new Vector2(Position.X + pixelWidth, Position.Y - 13);
+                    shoot.Play();
+                    bullet.Position = (spriteEffect == SpriteEffects.FlipHorizontally) ? new Vector2(Position.X, Position.Y - 13) : new Vector2(Position.X + pixelWidth, Position.Y - 13);
                     bullet.dir = (spriteEffect == SpriteEffects.None) ? Direction.Left : Direction.Right;
                     return;
                 }

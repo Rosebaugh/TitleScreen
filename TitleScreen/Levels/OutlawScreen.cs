@@ -99,9 +99,8 @@ namespace TitleScreen.Levels
                     {
                         if (outlaw.animationFrame != 2 && bullet.Visible && bullet.collides(outlaw.Bounds))
                         {
-                            outlaw.animationFrame = 2;
+                            outlaw.Hit();
                             bullet.Visible = false;
-                            ScreenValues.tutorial = ScreenValues.Tutorial.PauseIt;
                         }
                     }
                 }

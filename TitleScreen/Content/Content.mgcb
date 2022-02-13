@@ -68,6 +68,12 @@
 /processorParam:TextureFormat=Color
 /build:Enemy.png
 
+#begin Explosion7.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Explosion7.wav
+
 #begin Gun1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -91,6 +97,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Gun2.png
+
+#begin Hit_Hurt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Hit_Hurt.wav
 
 #begin Man.png
 /importer:TextureImporter
@@ -127,6 +139,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:PIXEL.png
+
+#begin Shoot.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Shoot.wav
 
 #begin slime.png
 /importer:TextureImporter
