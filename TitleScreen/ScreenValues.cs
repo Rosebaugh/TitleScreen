@@ -36,7 +36,8 @@ namespace TitleScreen
             TitleScreen = 0,
             PauseMenu = 1,
             Tutorial = 2,
-            Free = 3
+            Free = 3,
+            DeathScreen = 4
         }
 
         public enum Tutorial
@@ -47,7 +48,8 @@ namespace TitleScreen
             PickUp = 3,
             Shoot = 4,
             Fight = 5,
-            Completed = 6
+            PauseIt = 6,
+            Completed = 7
         }
 
         public enum Areas 
@@ -117,6 +119,9 @@ namespace TitleScreen
                     tutorial += 1;
                     break;
                 case Tutorial.Fight:
+                    tutorial += 1;
+                    break;
+                case Tutorial.PauseIt:
                     tutorial += 1;
                     State = GameState.Free;
                     break;

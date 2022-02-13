@@ -15,11 +15,6 @@ namespace TitleScreen.Sprites.Items
     public class Gun2 : Item
     {
         public Bullet[] bullets;
-
-        GamePadState Previousgps;
-        KeyboardState Previouskbs;
-        GamePadState gps;
-        KeyboardState kbs;
         public Gun2(Vector2 position)
         {
             Position = position;
@@ -46,27 +41,22 @@ namespace TitleScreen.Sprites.Items
             foreach (Bullet bullet in bullets) bullet.LoadContent(content);
         }
 
-        public override void Update(GameTime gameTime)
+        public void Shoot()
         {
-            Previousgps = gps;
-            Previouskbs = kbs;
-            gps = GamePad.GetState(PlayerIndex.One);
-            kbs = Keyboard.GetState();
-
-            if( (gps.Triggers.Right > 0.75 && !(Previousgps.Triggers.Right > 0.75)) ||
-                (kbs.IsKeyDown(Keys.Space) && Previouskbs.IsKeyDown(Keys.Space)))
+            foreach (Bullet bullet in bullets)
             {
-                foreach(Bullet bullet in bullets)
+                if (!bullet.Visible)
                 {
-                    if (!bullet.Visible)
-                    {
-                        bullet.Visible = true;
-                        bullet.Position = (spriteEffect == SpriteEffects.FlipHorizontally) ? Position : new Vector2(Position.X + pixelWidth, Position.Y);
-                        bullet.dir = (spriteEffect == SpriteEffects.None) ? Direction.Left : Direction.Right;
-                        return; 
-                    }
+                    bullet.Visible = true;
+                    bullet.Position = (spriteEffect == SpriteEffects.FlipHorizontally) ? Position : new Vector2(Position.X + pixelWidth, Position.Y);
+                    bullet.dir = (spriteEffect == SpriteEffects.None) ? Direction.Left : Direction.Right;
+                    return;
                 }
             }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
             foreach (Bullet bullet in bullets) bullet.Update(gameTime);
 
             Position = this.updateFallVector(gameTime, Position);

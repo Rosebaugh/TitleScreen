@@ -44,6 +44,7 @@ namespace TitleScreen
             Stickman = new StickmanSprite() { Position = new Vector2(100, 340) };
             currentScreen = new Title(spriteBatch, Stickman);
             Pause.LoadContent(Content);
+            Lose.LoadContent(Content);
             currentScreen.Initialize();
             currentScreen.LoadContent(Content);
         }
@@ -135,6 +136,14 @@ namespace TitleScreen
                     ScreenValues.State = ScreenValues.GameState.Free;
                 }
                 else if ((gps.Buttons.Back == ButtonState.Pressed && Previousgps.Buttons.Back != ButtonState.Pressed) || (kbs.IsKeyDown(Keys.Escape) && !Previouskbs.IsKeyDown(Keys.Escape)))          //Quit to Main Menu
+                {
+                    ScreenValues.ResetClass();
+                    LoadContent();
+                }
+            }
+            else if (ScreenValues.State == ScreenValues.GameState.DeathScreen)                //Paused
+            {
+                if ((gps.Buttons.Back == ButtonState.Pressed && Previousgps.Buttons.Back != ButtonState.Pressed) || (kbs.IsKeyDown(Keys.Escape) && !Previouskbs.IsKeyDown(Keys.Escape)))          //Quit to Main Menu
                 {
                     ScreenValues.ResetClass();
                     LoadContent();

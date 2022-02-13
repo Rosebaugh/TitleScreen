@@ -51,6 +51,7 @@ namespace TitleScreen.Levels
             };
             chest = new ChestSprite(new Vector2(100, ScreenValues.ScreenHeight - 64 - 20)) { contents = Treasure.Gun };
             outlaw = new OutlawSprite(new Vector2(ScreenValues.ScreenWidth - 100, ScreenValues.ScreenHeight - 230));
+            outlaw.spriteEffects = SpriteEffects.FlipHorizontally;
         }
 
         public override void LoadContent(ContentManager Content)
@@ -62,7 +63,7 @@ namespace TitleScreen.Levels
 
         public override void Update(GameTime gameTime, KeyboardState KBstate, GamePadState GPstate)
         {
-            if (ScreenValues.State != ScreenValues.GameState.PauseMenu)
+            if (ScreenValues.State != ScreenValues.GameState.PauseMenu && ScreenValues.State != ScreenValues.GameState.DeathScreen)
             {
                 stickman.Update(gameTime);
                 foreach (var bat in bats) bat.Update(gameTime);
@@ -102,11 +103,24 @@ namespace TitleScreen.Levels
                 {
                     if (stickman.item is Gun2 g2)
                     {
-                        foreach(Bullet bullet in g2.bullets)
+                        foreach (Bullet bullet in g2.bullets)
                         {
                             if (bullet.collides(outlaw.Bounds))
                             {
                                 outlaw.animationFrame = 2;
+                                bullet.Visible = false;
+                            }
+                        }
+                        ScreenValues.tutorial = ScreenValues.Tutorial.Fight;
+                    }
+                    if (outlaw.item is Gun2 og2)
+                    {
+                        foreach (Bullet bullet in og2.bullets)
+                        {
+                            if (bullet.collides(stickman.Bounds))
+                            {
+                                ScreenValues.State = ScreenValues.GameState.DeathScreen;
+                                bullet.Visible = false;
                             }
                         }
                         ScreenValues.tutorial = ScreenValues.Tutorial.Fight;
@@ -165,6 +179,7 @@ namespace TitleScreen.Levels
             stickman.Draw(gameTime, spriteBatch);
             foreach (var bat in bats) bat.Draw(gameTime, spriteBatch);
             if (ScreenValues.State == ScreenValues.GameState.PauseMenu) Pause.Draw(spriteBatch);
+            else if (ScreenValues.State == ScreenValues.GameState.DeathScreen) Lose.Draw(spriteBatch);
         }
     }
 }

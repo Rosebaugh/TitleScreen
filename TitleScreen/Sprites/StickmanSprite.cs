@@ -60,6 +60,12 @@ namespace TitleScreen.Sprites
         /// </summary>
         public AnimationFrame AnimationFrame;
 
+
+        GamePadState Previousgps;
+        KeyboardState Previouskbs;
+        GamePadState gps;
+        KeyboardState kbs;
+
         private BoundingRectangle bounds;
 
         /// <summary>
@@ -178,8 +184,23 @@ namespace TitleScreen.Sprites
                 float xdir = (Direction == ManDirection.Left) ? Position.X : Position.X + pixelWidth - 20;
                 item.Position = new Vector2(xdir, Position.Y + 60);
             }
-            else if(item != null)
+
+            if(item != null)
             {
+
+                Previousgps = gps;
+                Previouskbs = kbs;
+                gps = GamePad.GetState(PlayerIndex.One);
+                kbs = Keyboard.GetState();
+
+                if ((gps.Triggers.Right > 0.75 && !(Previousgps.Triggers.Right > 0.75)) ||
+                    (kbs.IsKeyDown(Keys.Space) && Previouskbs.IsKeyUp(Keys.Space)))
+                {
+                    if(item is Gun2 g2)
+                    {
+                        g2.Shoot();
+                    }
+                }
                 item.Update(gameTime);
             }
         }
