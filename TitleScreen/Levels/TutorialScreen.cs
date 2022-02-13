@@ -50,7 +50,7 @@ namespace TitleScreen.Levels
                 new BatSprite() { Position = new Vector2(650, 150), Horizontal = Direction.Left},
             };
             chest = new ChestSprite(new Vector2(100, ScreenValues.ScreenHeight - 64 - 20)) { contents = Treasure.Gun };
-            outlaw = new OutlawSprite(new Vector2(ScreenValues.ScreenWidth - 100, ScreenValues.ScreenHeight - 230));
+            outlaw = new OutlawSprite(new Vector2(ScreenValues.ScreenWidth - 100, ScreenValues.ScreenHeight - 260), false);
             outlaw.spriteEffects = SpriteEffects.FlipHorizontally;
         }
 
@@ -101,8 +101,11 @@ namespace TitleScreen.Levels
                 }
                 else if (ScreenValues.Tutorial.Fight == ScreenValues.tutorial)
                 {
-                    if (stickman.item is Gun2 g2)
+                    Gun2 g2 = null;
+                    Gun2 og2 = null;
+                    if (stickman.item is Gun2)
                     {
+                        g2 = (Gun2)stickman.item;
                         foreach (Bullet bullet in g2.bullets)
                         {
                             if (bullet.collides(outlaw.Bounds))
@@ -113,8 +116,10 @@ namespace TitleScreen.Levels
                             }
                         }
                     }
-                    if (outlaw.item is Gun2 og2)
+                    if (outlaw.item is Gun2)
                     {
+                        og2 = (Gun2)outlaw.item;
+
                         foreach (Bullet bullet in og2.bullets)
                         {
                             if (bullet.collides(stickman.Bounds))
@@ -124,16 +129,34 @@ namespace TitleScreen.Levels
                             }
                         }
                     }
+                    if (og2 != null && g2 != null)
+                    {
+                        foreach (Bullet bullet in g2.bullets)
+                        {
+                            if (bullet.Visible)
+                            {
+
+                                foreach (Bullet badBullet in og2.bullets)
+                                {
+                                    if (badBullet.Visible && badBullet.collides(bullet.Bounds))
+                                    {
+                                        bullet.Visible = false;
+                                        badBullet.Visible = false;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
+                chest.Update(gameTime);
+                outlaw.Update(gameTime);
+                Previousgps = GPstate;
+                Previouskbs = KBstate;
             }
             else if(ScreenValues.State == ScreenValues.GameState.PauseMenu)
             {
                 ScreenValues.tutorial = ScreenValues.Tutorial.Completed;
             }
-            chest.Update(gameTime);
-            outlaw.Update(gameTime);
-            Previousgps = GPstate;
-            Previouskbs = KBstate;
         }
 
         public override void Draw(GameTime gameTime)

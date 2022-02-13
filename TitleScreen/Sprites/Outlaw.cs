@@ -36,18 +36,37 @@ namespace TitleScreen.Sprites
         /// </summary>
         public BoundingRectangle Bounds => bounds;
 
-        public OutlawSprite(Vector2 position)
+        public OutlawSprite(bool visible = false)
         {
+            Visible = visible;
+            spriteEffects = (ScreenValues.SickmanSpawnLocation == SpawnLocation.Left) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            dir = (spriteEffects == SpriteEffects.FlipHorizontally) ? Direction.Left : Direction.Right;
+
+            Position = (dir == Direction.Left) ? new Vector2(ScreenValues.ScreenWidth - 100, ScreenValues.ScreenHeight - 270) : new Vector2(100, ScreenValues.ScreenHeight - 270);
+            pixelWidth = 105;
+            pixelHeight = 255;
+            this.bounds = new BoundingRectangle(Position, pixelWidth, pixelHeight);
+            float xdir = (dir == Direction.Left) ? Position.X - 10 : Position.X + pixelWidth - 10;
+            item = new Gun2(new Vector2(xdir, Position.Y + 170));
+            item.falling = false;
+            item.spriteEffect = (dir == Direction.Left) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+
+        }
+        public OutlawSprite(Vector2 position, bool visible = false)
+        {
+            Visible = visible;
+            dir = (spriteEffects == SpriteEffects.FlipHorizontally) ? Direction.Left : Direction.Right;
+            spriteEffects = (ScreenValues.SickmanSpawnLocation == SpawnLocation.Left) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+
             Position = position;
             pixelWidth = 105;
             pixelHeight = 255;
             this.bounds = new BoundingRectangle(Position, pixelWidth, pixelHeight);
             float xdir = (dir == Direction.Left) ? Position.X - 10 : Position.X + pixelWidth - 10;
-            item = new Gun2(new Vector2(xdir, Position.Y + 160));
+            item = new Gun2(new Vector2(xdir, Position.Y + 170));
             item.falling = false;
             item.spriteEffect = (dir == Direction.Left) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-
-            spriteEffects = (ScreenValues.SickmanSpawnLocation == SpawnLocation.Left) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
         }
 
@@ -59,6 +78,7 @@ namespace TitleScreen.Sprites
         {
             texture = content.Load<Texture2D>("Enemy");
             item.LoadContent(content);
+            shootTimer = 0;
         }
 
         /// <summary>
@@ -111,19 +131,22 @@ namespace TitleScreen.Sprites
         /// <param name="spriteBatch">The SpriteBatch to draw with</param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            //Update animation timer
-            animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
-            
-            //Update animation frame
-            if (animationTimer > 0.6 && animationFrame != 2)
+            if (Visible)
             {
-                animationFrame = 1;
-                item.Draw(gameTime, spriteBatch);
-            }
+                //Update animation timer
+                animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
-            //Draw the sprite
-            var source = new Rectangle(animationFrame * pixelWidth, 0, pixelWidth, pixelHeight);
-            spriteBatch.Draw(texture, Position, source, Color.White, 0, new Vector2(0, 0), 1, spriteEffects, 0);
+                //Update animation frame
+                if (animationTimer > 0.6 && animationFrame != 2)
+                {
+                    animationFrame = 1;
+                    item.Draw(gameTime, spriteBatch);
+                }
+
+                //Draw the sprite
+                var source = new Rectangle(animationFrame * pixelWidth, 0, pixelWidth, pixelHeight);
+                spriteBatch.Draw(texture, Position, source, Color.White, 0, new Vector2(0, 0), 1, spriteEffects, 0);
+            }
         }
     }
 }

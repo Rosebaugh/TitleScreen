@@ -48,7 +48,7 @@ namespace TitleScreen.Sprites.Items
                 if (!bullet.Visible)
                 {
                     bullet.Visible = true;
-                    bullet.Position = (spriteEffect == SpriteEffects.FlipHorizontally) ? Position : new Vector2(Position.X + pixelWidth, Position.Y);
+                    bullet.Position = (spriteEffect == SpriteEffects.FlipHorizontally) ? Position += new Vector2(0, -13) : new Vector2(Position.X + pixelWidth, Position.Y - 13);
                     bullet.dir = (spriteEffect == SpriteEffects.None) ? Direction.Left : Direction.Right;
                     return;
                 }

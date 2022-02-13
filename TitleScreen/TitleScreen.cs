@@ -76,7 +76,7 @@ namespace TitleScreen
                     currentScreen.LoadContent(Content);
                     break;
                 case ScreenValues.Areas.Bosses:
-                    currentScreen = new Title(spriteBatch, Stickman);
+                    currentScreen = new OutlawScreen(spriteBatch, Stickman);
                     currentScreen.Initialize();
                     currentScreen.LoadContent(Content);
                     break;
@@ -124,7 +124,7 @@ namespace TitleScreen
                 {
                     LoadNewScreen();
                 }
-                if (gps.Buttons.Back == ButtonState.Pressed || kbs.IsKeyDown(Keys.Escape)) //Exit
+                if ((gps.Buttons.Back == ButtonState.Pressed && Previousgps.Buttons.Back == ButtonState.Released) || (kbs.IsKeyDown(Keys.Escape) && Previouskbs.IsKeyUp(Keys.Escape))) //Exit
                 {
                     Exit();
                 }

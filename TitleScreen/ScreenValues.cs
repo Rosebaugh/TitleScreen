@@ -130,6 +130,10 @@ namespace TitleScreen
         }
         private static Areas newRandomArea()
         {
+            return Areas.Bosses;
+
+            //Impliment others later
+
             Random rnd = new Random();
             int roll = (short)rnd.Next(0, 100);
             if (roll >= 0 || roll < 69)         //Bosses
