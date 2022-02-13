@@ -12,7 +12,7 @@ using TitleScreen.Sprites.Items;
 
 namespace TitleScreen.Levels
 {
-    public class Blank : Screen
+    public class TutorialScreen : Screen
     {
         private BatSprite[] bats;
         private ChestSprite chest;
@@ -22,7 +22,7 @@ namespace TitleScreen.Levels
         GamePadState Previousgps;
         KeyboardState Previouskbs;
 
-        public Blank(SpriteBatch spriteBatch, StickmanSprite Stickman)
+        public TutorialScreen(SpriteBatch spriteBatch, StickmanSprite Stickman)
         {
             this.spriteBatch = spriteBatch;
             stickman = Stickman;
@@ -109,9 +109,9 @@ namespace TitleScreen.Levels
                             {
                                 outlaw.animationFrame = 2;
                                 bullet.Visible = false;
+                                ScreenValues.tutorial = ScreenValues.Tutorial.PauseIt;
                             }
                         }
-                        ScreenValues.tutorial = ScreenValues.Tutorial.Fight;
                     }
                     if (outlaw.item is Gun2 og2)
                     {
@@ -123,9 +123,12 @@ namespace TitleScreen.Levels
                                 bullet.Visible = false;
                             }
                         }
-                        ScreenValues.tutorial = ScreenValues.Tutorial.Fight;
                     }
                 }
+            }
+            else if(ScreenValues.State == ScreenValues.GameState.PauseMenu)
+            {
+                ScreenValues.tutorial = ScreenValues.Tutorial.Completed;
             }
             chest.Update(gameTime);
             outlaw.Update(gameTime);
@@ -170,10 +173,15 @@ namespace TitleScreen.Levels
                     spriteBatch.DrawString(bangers, "SHOOT HIM FIRST", new Vector2(100, 50), Color.Red, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
                     outlaw.Draw(gameTime, spriteBatch);
                 }
-                else if (ScreenValues.Tutorial.Completed == ScreenValues.tutorial)
+                else if (ScreenValues.Tutorial.PauseIt == ScreenValues.tutorial)
                 {
-                    spriteBatch.DrawString(bangers, "You have completed the tutorial. Now leave.", new Vector2(25, 120), Color.Red, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(bangers, "Press 'ESC' or 'Back' to pause", new Vector2(100, 50), Color.Red, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
+                    outlaw.Draw(gameTime, spriteBatch);
                 }
+            }
+            else if (ScreenValues.GameState.Free == ScreenValues.State && ScreenValues.Tutorial.Completed == ScreenValues.tutorial)
+            {
+                spriteBatch.DrawString(bangers, "You have completed the tutorial. Now leave.", new Vector2(25, 120), Color.Red, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
             }
 
             stickman.Draw(gameTime, spriteBatch);

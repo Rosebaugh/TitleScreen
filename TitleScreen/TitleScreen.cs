@@ -71,7 +71,7 @@ namespace TitleScreen
             switch (ScreenValues.CurrentScreen)
             {
                 case ScreenValues.Areas.Blank:
-                    currentScreen = new Blank(spriteBatch, Stickman);
+                    currentScreen = new TutorialScreen(spriteBatch, Stickman);
                     currentScreen.Initialize();
                     currentScreen.LoadContent(Content);
                     break;
@@ -159,6 +159,11 @@ namespace TitleScreen
                     Stickman.item = new Gun2(new Vector2(0, 0));
                     Stickman.item.LoadContent(Content);
                     Stickman.item.falling = false;
+                }
+                else if (ScreenValues.tutorial == ScreenValues.Tutorial.PauseIt && ((gps.Buttons.Back == ButtonState.Pressed && Previousgps.Buttons.Back != ButtonState.Pressed) ||
+                    (kbs.IsKeyDown(Keys.Escape) && !Previouskbs.IsKeyDown(Keys.Escape))))         //exit Tutorial 
+                {
+                    ScreenValues.State = ScreenValues.GameState.PauseMenu;
                 }
             }
             else if (ScreenValues.State == ScreenValues.GameState.Free)             //FREE
