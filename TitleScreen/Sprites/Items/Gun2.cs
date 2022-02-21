@@ -69,8 +69,8 @@ namespace TitleScreen.Sprites.Items
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             var source = new Rectangle(0, 0, pixelWidth, pixelHeight);
-            spriteBatch.Draw(texture, Position, source, Color.White, 0, new Vector2(0, 0), 1, spriteEffect, 0);
             foreach (Bullet bullet in bullets) bullet.Draw(gameTime, spriteBatch);
+            spriteBatch.Draw(texture, Position, source, Color.White, 0, new Vector2(0, 0), 1, spriteEffect, 0);
         }
 
     }

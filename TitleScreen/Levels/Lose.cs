@@ -29,6 +29,7 @@ namespace TitleScreen.Levels
             if (!showing)
             {
                 lose.Play();
+                showing = true;
             }
 
             spriteBatch.Draw(pixel, new Rectangle(0, 0, ScreenValues.ScreenWidth, ScreenValues.ScreenHeight), Color.DarkRed * (float).8);

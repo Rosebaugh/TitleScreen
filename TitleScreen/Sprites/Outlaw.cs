@@ -22,6 +22,20 @@ namespace TitleScreen.Sprites
         private double animationTimer;
         public short animationFrame;
         private double shootTimer;
+        private float gunxdir
+        {
+            get
+            {
+                return (dir == Direction.Left) ? Position.X + 5 : Position.X + pixelWidth - 30;
+            }
+        }
+        private float gunydir
+        {
+            get
+            {
+                return Position.Y + 160;
+            }
+        }
 
         public bool Visible = false;
         public Direction dir;
@@ -48,8 +62,7 @@ namespace TitleScreen.Sprites
             pixelWidth = 105;
             pixelHeight = 255;
             this.bounds = new BoundingRectangle(Position, pixelWidth, pixelHeight);
-            float xdir = (dir == Direction.Left) ? Position.X - 10 : Position.X + pixelWidth - 10;
-            item = new Gun2(new Vector2(xdir, Position.Y + 170));
+            item = new Gun2(new Vector2(gunxdir, gunydir));
             item.falling = false;
             item.spriteEffect = (dir == Direction.Left) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
@@ -65,8 +78,7 @@ namespace TitleScreen.Sprites
             pixelWidth = 105;
             pixelHeight = 255;
             this.bounds = new BoundingRectangle(Position, pixelWidth, pixelHeight);
-            float xdir = (dir == Direction.Left) ? Position.X - 10 : Position.X + pixelWidth - 10;
-            item = new Gun2(new Vector2(xdir, Position.Y + 170));
+            item = new Gun2(new Vector2(gunxdir, gunydir));
             item.falling = false;
             item.spriteEffect = (dir == Direction.Left) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
@@ -123,8 +135,7 @@ namespace TitleScreen.Sprites
                     dir = (spriteEffects == SpriteEffects.FlipHorizontally) ? Direction.Left : Direction.Right;
                     if (item != null)
                     {
-                        float xdir = (dir == Direction.Left) ? Position.X - 10 : Position.X + pixelWidth - 10;
-                        item.Position = new Vector2(xdir, Position.Y + 160);
+                        //item.Position = new Vector2(xdir, Position.Y + 160);
                         item.spriteEffect = (dir == Direction.Left) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
                         item.Update(gameTime);
@@ -146,16 +157,16 @@ namespace TitleScreen.Sprites
                 //Update animation timer
                 animationTimer += gameTime.ElapsedGameTime.TotalSeconds;
 
+                //Draw the sprite
+                var source = new Rectangle(animationFrame * pixelWidth, 0, pixelWidth, pixelHeight);
+                spriteBatch.Draw(texture, Position, source, Color.White, 0, new Vector2(0, 0), 1, spriteEffects, 0);
+
                 //Update animation frame
                 if (animationTimer > 0.6 && animationFrame != 2)
                 {
                     animationFrame = 1;
                     item.Draw(gameTime, spriteBatch);
                 }
-
-                //Draw the sprite
-                var source = new Rectangle(animationFrame * pixelWidth, 0, pixelWidth, pixelHeight);
-                spriteBatch.Draw(texture, Position, source, Color.White, 0, new Vector2(0, 0), 1, spriteEffects, 0);
             }
         }
     }

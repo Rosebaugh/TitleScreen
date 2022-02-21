@@ -50,13 +50,13 @@ namespace TitleScreen
         }
         public bool EndOfScreen()
         {
-            if (Stickman.Position.X + Stickman.pixelWidth - 15 > ScreenValues.ScreenWidth)
+            if (Stickman.Position.X + Stickman.pixelWidth - 35 > ScreenValues.ScreenWidth)
             {
                 ScreenValues.SickmanSpawnLocation = SpawnLocation.Left;
                 Stickman.LoadNewPage();
                 return true;
             }
-            else if (Stickman.Position.X - 15 < 0)
+            else if (Stickman.Position.X + 15 < 0)
             {
                 ScreenValues.SickmanSpawnLocation = SpawnLocation.Right;
                 Stickman.LoadNewPage();
@@ -158,9 +158,7 @@ namespace TitleScreen
                     (kbs.IsKeyDown(Keys.Enter) && !Previouskbs.IsKeyDown(Keys.Enter)))        //exit Tutorial 
                 {
                     ScreenValues.State = ScreenValues.GameState.Free;
-                    Stickman.item = new Gun2(new Vector2(0, 0));
-                    Stickman.item.LoadContent(Content);
-                    Stickman.item.falling = false;
+                    Stickman.GetGun(Content);
                 }
                 else if (ScreenValues.tutorial == ScreenValues.Tutorial.PauseIt && ((gps.Buttons.Back == ButtonState.Pressed && Previousgps.Buttons.Back != ButtonState.Pressed) ||
                     (kbs.IsKeyDown(Keys.Escape) && !Previouskbs.IsKeyDown(Keys.Escape))))         //exit Tutorial 
@@ -178,13 +176,12 @@ namespace TitleScreen
                 }
             }
 
+            screenUpdate(gameTime, Keyboard.GetState(), GamePad.GetState(PlayerIndex.One));
 
             if (EndOfScreen())
             {
                 LoadNewScreen();
             }
-
-            screenUpdate(gameTime, Keyboard.GetState(), GamePad.GetState(PlayerIndex.One));
 
             base.Update(gameTime);
         }

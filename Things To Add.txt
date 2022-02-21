@@ -1,0 +1,12 @@
+Player shoot upwards (rotate, bats can rotate and fall off screen maybe)
+Player health
+Oulaw health
+saloon level, chest level, Multiple outlaw levels
+variable outlaw shooting (either random or based off of player level)
+player level
+
+Things to redo:
+Tutorial (you can walk off screen without obtaining gun)
+Chest dropping (make it better, probably just make it spawn higher, have a bigger hitbox, and go horizontal more)
+Gun position in hand of Playable Character
+

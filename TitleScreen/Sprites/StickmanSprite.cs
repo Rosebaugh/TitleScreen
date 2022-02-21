@@ -69,6 +69,23 @@ namespace TitleScreen.Sprites
 
         private BoundingRectangle bounds;
 
+        private float lastdir = 0;
+        private float gunxdir
+        {
+            get
+            {
+                if (Direction != ManDirection.Still) lastdir = (Direction == ManDirection.Left) ? Position.X : Position.X + pixelWidth - 28;
+                return lastdir;
+            }
+        }
+        private float gunydir
+        {
+            get
+            {
+                return Position.Y + 45;
+            }
+        }
+
         /// <summary>
         /// The bounding volume of the sprite
         /// </summary>
@@ -100,6 +117,16 @@ namespace TitleScreen.Sprites
                     bullet.Visible = false;
                 }
             }
+        }
+        public void GetGun(ContentManager content)
+        {
+            ManDirection temp = Direction;
+            Direction = ManDirection.Right;
+            lastdir = gunxdir;
+            Direction = temp;
+            item = new Gun2(new Vector2(0, 0));
+            item.LoadContent(content);
+            item.falling = false;
         }
 
         /// <summary>
@@ -191,14 +218,10 @@ namespace TitleScreen.Sprites
 
             }
 
-            if(item != null && Direction != ManDirection.Still)
-            {
-                float xdir = (Direction == ManDirection.Left) ? Position.X : Position.X + pixelWidth - 20;
-                item.Position = new Vector2(xdir, Position.Y + 60);
-            }
 
             if(item != null)
             {
+                item.Position = new Vector2(gunxdir, gunydir);
 
                 Previousgps = gps;
                 Previouskbs = kbs;

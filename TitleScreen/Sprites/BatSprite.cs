@@ -109,7 +109,7 @@ namespace TitleScreen.Sprites
 
             //Move the bat in the direction it is flying
 
-            Debug.WriteLine((float)((int)Veritcle * -0.5));
+            //Debug.WriteLine((float)((int)Veritcle * -0.5));
 
             switch (Horizontal)
             {

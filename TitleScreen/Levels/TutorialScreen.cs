@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -61,6 +62,18 @@ namespace TitleScreen.Levels
             outlaw.LoadContent(Content);
         }
 
+        public void DontLetLeave()
+        {
+            if (stickman.Position.X + stickman.pixelWidth - 35 > ScreenValues.ScreenWidth)
+            {
+                stickman.Position.X = stickman.Position.X - 50;
+            }
+            else if (stickman.Position.X + 15 < 0)
+            {
+                stickman.Position.X = stickman.Position.X + 15;
+            }
+        }
+
         public override void Update(GameTime gameTime, KeyboardState KBstate, GamePadState GPstate)
         {
             if (ScreenValues.State != ScreenValues.GameState.PauseMenu && ScreenValues.State != ScreenValues.GameState.DeathScreen)
@@ -68,8 +81,10 @@ namespace TitleScreen.Levels
                 stickman.Update(gameTime);
                 foreach (var bat in bats) bat.Update(gameTime);
 
-                if (chest.content != null)
+                if (chest.content != null && ScreenValues.Tutorial.Completed > ScreenValues.tutorial && ScreenValues.Tutorial.NewTerrain < ScreenValues.tutorial)
                 {
+                    DontLetLeave();
+
                     if (stickman.Bounds.CollidesWith(chest.Bounds) && ScreenValues.Tutorial.CollectItems == ScreenValues.tutorial)
                     {
                         if (((KBstate.IsKeyDown(Keys.E) && Previouskbs.IsKeyUp(Keys.E)) || (GPstate.Buttons.X == ButtonState.Pressed && Previousgps.Buttons.X != ButtonState.Pressed)) && chest.animationFrame != 1)
@@ -92,6 +107,8 @@ namespace TitleScreen.Levels
                 }
                 if (ScreenValues.Tutorial.Shoot == ScreenValues.tutorial)
                 {
+                    DontLetLeave();
+
                     if ((GPstate.Triggers.Right > 0.75 && !(Previousgps.Triggers.Right > 0.75)) ||
                         (KBstate.IsKeyDown(Keys.Space) && Previouskbs.IsKeyDown(Keys.Space)) && chest.animationFrame == 1)
                     {
@@ -157,6 +174,7 @@ namespace TitleScreen.Levels
             {
                 ScreenValues.tutorial = ScreenValues.Tutorial.Completed;
             }
+
         }
 
         public override void Draw(GameTime gameTime)
