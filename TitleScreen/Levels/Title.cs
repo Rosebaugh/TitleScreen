@@ -34,7 +34,7 @@ namespace TitleScreen.Levels
                 new BatSprite(){ Position = new Vector2(320, 250), Horizontal = Direction.Right},
                 new BatSprite() { Position = new Vector2(300, 220), Horizontal = Direction.Left},
             };
-            chest = new ChestSprite(new Vector2(100, ScreenValues.ScreenHeight - 64));
+            chest = new ChestSprite(new Vector2(100, ScreenValues.ScreenHeight - 64), Treasure.Empty);
             saloon = new SaloonSprite(new Vector2(500, ScreenValues.ScreenHeight - 256));
         }
         public override void LoadContent(ContentManager Content)

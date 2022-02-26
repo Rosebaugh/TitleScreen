@@ -50,7 +50,7 @@ namespace TitleScreen.Levels
                 new BatSprite() { Position = new Vector2(300, 120), Horizontal = Direction.Left},
                 new BatSprite() { Position = new Vector2(650, 150), Horizontal = Direction.Left},
             };
-            chest = new ChestSprite(new Vector2(100, ScreenValues.ScreenHeight - 64 - 20)) { contents = Treasure.Gun };
+            chest = new ChestSprite(new Vector2(100, ScreenValues.ScreenHeight - 64 - 20), Treasure.Gun);
             outlaw = new OutlawSprite(new Vector2(ScreenValues.ScreenWidth - 100, ScreenValues.ScreenHeight - 260), SpawnLocation.Left, false);
         }
 

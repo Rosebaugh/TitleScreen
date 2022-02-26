@@ -22,6 +22,7 @@ namespace TitleScreen.Sprites
         private double animationTimer;
         public short animationFrame;
         private double shootTimer;
+        public Item[] dropItems;
         private float gunxdir
         {
             get
@@ -111,6 +112,13 @@ namespace TitleScreen.Sprites
             shootTimer = 0;
 
             hit = content.Load<SoundEffect>("Hit_Hurt");
+
+            dropItems = new Item[]
+            {
+                new Bullet() {Visible = false, falling = true },
+                new Bullet() {Visible = false, falling = true },
+                new Bullet( {Visible = false, falling = true }
+            };
         }
 
         public void Hit()

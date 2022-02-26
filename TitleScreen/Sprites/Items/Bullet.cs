@@ -26,6 +26,7 @@ namespace TitleScreen.Content
         {
             pixelWidth = 40;
             pixelHeight = 40;
+            falling = false;
         }
 
         public bool collides(BoundingRectangle s)
@@ -53,6 +54,7 @@ namespace TitleScreen.Content
         {
             EndOfScreen();
 
+            Position = this.updateFallVector(gameTime, Position);
             if (Visible)
             {
                 int Offset = (dir == Direction.Left) ? -1 : 1;

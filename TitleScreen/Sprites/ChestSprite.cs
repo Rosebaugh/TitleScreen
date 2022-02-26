@@ -28,7 +28,7 @@ namespace TitleScreen.Sprites
         /// </summary>
         public BoundingRectangle Bounds => bounds;
 
-        public ChestSprite(Vector2 position)
+        public ChestSprite(Vector2 position, Treasure contentt)
         {
             animationFrame = 0;
             Position = position;
@@ -36,7 +36,18 @@ namespace TitleScreen.Sprites
             pixelHeight = 64;
             this.bounds = new BoundingRectangle(Position, pixelWidth, pixelHeight);
 
-            content = new Gun2(new Vector2(Position.X + pixelWidth/2, Position.Y + 35));
+            switch (contentt)
+            {
+                case Treasure.Empty:
+
+                    break;
+                case Treasure.Gun:
+                    content = new Gun2(new Vector2(Position.X + pixelWidth / 2, Position.Y - 35));
+                    break;
+                case Treasure.Coin:
+
+                    break;
+            }
         }
 
         /// <summary>
@@ -46,7 +57,7 @@ namespace TitleScreen.Sprites
         public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>("Chest");
-            this.content.LoadContent(content);
+            if(this.content != null) this.content.LoadContent(content);
         }
 
         /// <summary>
