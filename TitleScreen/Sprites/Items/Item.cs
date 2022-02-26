@@ -46,14 +46,14 @@ namespace TitleScreen.Sprites.Items
             float t = (float)gameTime.ElapsedGameTime.TotalSeconds;
             accelerationTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if(accelerationTimer < 0)
+            if (accelerationTimer < 0)
             {
                 acceleration = new Vector2(0, 100);
             }
             velocity += acceleration * t;
             position += velocity * t;
 
-            if(position.Y >= floor && acceleration.Y >= 0)
+            if (position.Y >= floor && acceleration.Y >= 0)
             {
                 acceleration = new Vector2(0, 0);
                 falling = false;
@@ -62,5 +62,5 @@ namespace TitleScreen.Sprites.Items
 
             return position;
         }
-    }
+   }
 }

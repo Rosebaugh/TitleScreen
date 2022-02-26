@@ -23,6 +23,7 @@ namespace TitleScreen.Sprites
         public short animationFrame;
         private double shootTimer;
         public Item[] dropItems;
+        public bool ItemsDropped = false;
         private float gunxdir
         {
             get
@@ -115,10 +116,14 @@ namespace TitleScreen.Sprites
 
             dropItems = new Item[]
             {
-                new Bullet() {Visible = false, falling = true },
-                new Bullet() {Visible = false, falling = true },
-                new Bullet( {Visible = false, falling = true }
+                new Bullet() {Visible = false, falling = true, shoot = false },
+                new Bullet() {Visible = false, falling = true, shoot = false },
+                new Bullet() {Visible = false, falling = true, shoot = false }
             };
+            foreach(Item i in dropItems)
+            {
+                i.LoadContent(content);
+            }
         }
 
         public void Hit()
@@ -165,7 +170,13 @@ namespace TitleScreen.Sprites
                         item.Update(gameTime);
                     }
                 }
-
+                if (animationFrame == 2)
+                {
+                    foreach (Item i in dropItems)
+                    {
+                        //i.Draw(gameTime, spriteBatch);
+                    }
+                }
             }
         }
 
@@ -190,6 +201,27 @@ namespace TitleScreen.Sprites
                 {
                     animationFrame = 1;
                     item.Draw(gameTime, spriteBatch);
+                }
+
+                if(animationFrame == 2 && !ItemsDropped)
+                {
+                    ItemsDropped = true;
+                    foreach (Item i in dropItems)
+                    {
+                        if(i is Bullet g2)
+                        {
+                            g2.Visible = true;
+                            g2.Spawn();
+                            //i.Draw(gameTime, spriteBatch);
+                        }
+                    }
+                }
+                else if(animationFrame == 2)
+                {
+                    foreach (Item i in dropItems)
+                    {
+                        //i.Draw(gameTime, spriteBatch);
+                    }
                 }
             }
         }

@@ -21,6 +21,7 @@ namespace TitleScreen.Content
         public BoundingRectangle Bounds => bounds;
 
         public bool Visible = false;
+        public bool shoot = true;
         public Direction dir;
         public Bullet()
         {
@@ -54,13 +55,15 @@ namespace TitleScreen.Content
         {
             EndOfScreen();
 
-            Position = this.updateFallVector(gameTime, Position);
-            if (Visible)
+            if (Visible && shoot)
             {
                 int Offset = (dir == Direction.Left) ? -1 : 1;
                 Position += new Vector2((float)(600 * Offset * gameTime.ElapsedGameTime.TotalSeconds), 0); 
                 this.bounds = new BoundingRectangle(Position, pixelWidth, pixelHeight);
-
+            }
+            else if(Visible && !shoot)
+            {
+                Position = this.updateFallVector(gameTime, Position);
             }
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
