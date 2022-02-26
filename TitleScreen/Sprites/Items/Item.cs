@@ -30,8 +30,8 @@ namespace TitleScreen.Sprites.Items
         public void Spawn()
         {
             Random rand = new Random();
-            direction = rand.Next(0, 2);
-            velocity = new Vector2(20 * (-1 * direction), -50);
+            direction = rand.Next(0, 2) * 2 - 1;
+            velocity = new Vector2(rand.Next(5, 25) * direction, -10 * rand.Next(4, 16));
             acceleration = new Vector2(0, -100);
             accelerationTimer = (float).25;
         }
@@ -53,6 +53,11 @@ namespace TitleScreen.Sprites.Items
             velocity += acceleration * t;
             position += velocity * t;
 
+
+            if (position.X < 30)
+            {
+                position.X = 30;
+            }
             if (position.Y >= floor && acceleration.Y >= 0)
             {
                 acceleration = new Vector2(0, 0);

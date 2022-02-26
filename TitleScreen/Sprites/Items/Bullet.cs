@@ -28,6 +28,7 @@ namespace TitleScreen.Content
             pixelWidth = 40;
             pixelHeight = 40;
             falling = false;
+            Position = new Vector2(100, 100);
         }
 
         public bool collides(BoundingRectangle s)

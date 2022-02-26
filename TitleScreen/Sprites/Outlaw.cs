@@ -116,9 +116,9 @@ namespace TitleScreen.Sprites
 
             dropItems = new Item[]
             {
-                new Bullet() {Visible = false, falling = true, shoot = false },
-                new Bullet() {Visible = false, falling = true, shoot = false },
-                new Bullet() {Visible = false, falling = true, shoot = false }
+                new Bullet() {Visible = false, falling = true, shoot = false, Position = new Vector2(Position.X + (pixelWidth/2), Position.Y + (pixelHeight/2)) },
+                new Bullet() {Visible = false, falling = true, shoot = false, Position = new Vector2(Position.X + (pixelWidth/2), Position.Y + (pixelHeight/2)) },
+                new Bullet() {Visible = false, falling = true, shoot = false, Position = new Vector2(Position.X + (pixelWidth/2), Position.Y + (pixelHeight/2)) }
             };
             foreach(Item i in dropItems)
             {
@@ -174,7 +174,7 @@ namespace TitleScreen.Sprites
                 {
                     foreach (Item i in dropItems)
                     {
-                        //i.Draw(gameTime, spriteBatch);
+                        i.Update(gameTime);
                     }
                 }
             }
@@ -220,7 +220,7 @@ namespace TitleScreen.Sprites
                 {
                     foreach (Item i in dropItems)
                     {
-                        //i.Draw(gameTime, spriteBatch);
+                        i.Draw(gameTime, spriteBatch);
                     }
                 }
             }
