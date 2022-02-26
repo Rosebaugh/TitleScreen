@@ -51,8 +51,7 @@ namespace TitleScreen.Levels
                 new BatSprite() { Position = new Vector2(650, 150), Horizontal = Direction.Left},
             };
             chest = new ChestSprite(new Vector2(100, ScreenValues.ScreenHeight - 64 - 20)) { contents = Treasure.Gun };
-            outlaw = new OutlawSprite(new Vector2(ScreenValues.ScreenWidth - 100, ScreenValues.ScreenHeight - 260), false);
-            outlaw.spriteEffects = SpriteEffects.FlipHorizontally;
+            outlaw = new OutlawSprite(new Vector2(ScreenValues.ScreenWidth - 100, ScreenValues.ScreenHeight - 260), SpawnLocation.Left, false);
         }
 
         public override void LoadContent(ContentManager Content)
@@ -181,17 +180,17 @@ namespace TitleScreen.Levels
         {
             if(ScreenValues.GameState.Tutorial == ScreenValues.State)
             {
-                if(ScreenValues.Tutorial.Scroll == ScreenValues.tutorial)
+                spriteBatch.DrawString(bangers, "Press ENTER or Start to Skip", new Vector2(225, 0), Color.Green, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
+                if (ScreenValues.Tutorial.Scroll == ScreenValues.tutorial)
                 {
-                    spriteBatch.DrawString(bangers, "Tutorial:", new Vector2(100, 50), Color.Red, 0, new Vector2(0, 0), .75f, SpriteEffects.None, 0);
-                    spriteBatch.DrawString(bangers, "Press ENTER or Start to Skip", new Vector2(225, 120), Color.Red, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(bangers, "Tutorial:", new Vector2(100, 100), Color.Red, 0, new Vector2(0, 0), .75f, SpriteEffects.None, 0);
                     spriteBatch.DrawString(bangers, "Head in a direction", new Vector2(225, 165), Color.Red, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
                     spriteBatch.DrawString(bangers, "<->", new Vector2(225, 200), Color.Red, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0);
                 }
                 else if (ScreenValues.Tutorial.NewTerrain == ScreenValues.tutorial)
                 {
                     spriteBatch.DrawString(bangers, "Go back the same way you came", new Vector2(25, 120), Color.Red, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
-                    spriteBatch.DrawString(bangers, "and it will be different", new Vector2(225, 165), Color.Red, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
+                    spriteBatch.DrawString(bangers, "and it will be a different area", new Vector2(25, 165), Color.Red, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
                 }
                 else if (ScreenValues.Tutorial.CollectItems == ScreenValues.tutorial)
                 {

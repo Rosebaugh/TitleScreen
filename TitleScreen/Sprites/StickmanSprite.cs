@@ -238,6 +238,10 @@ namespace TitleScreen.Sprites
                 }
                 item.Update(gameTime);
             }
+            else
+            {
+                lastdir = Position.X + pixelWidth - 28;
+            }
         }
 
         /// <summary>

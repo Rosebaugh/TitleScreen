@@ -71,8 +71,24 @@ namespace TitleScreen.Sprites
         public OutlawSprite(Vector2 position, bool visible = false)
         {
             Visible = visible;
-            dir = (spriteEffects == SpriteEffects.FlipHorizontally) ? Direction.Left : Direction.Right;
             spriteEffects = (ScreenValues.SickmanSpawnLocation == SpawnLocation.Left) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            dir = (spriteEffects == SpriteEffects.FlipHorizontally) ? Direction.Left : Direction.Right;
+
+            Position = position;
+            pixelWidth = 105;
+            pixelHeight = 255;
+            this.bounds = new BoundingRectangle(Position, pixelWidth, pixelHeight);
+            item = new Gun2(new Vector2(gunxdir, gunydir));
+            item.falling = false;
+            item.spriteEffect = (dir == Direction.Left) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+        }
+        public OutlawSprite(Vector2 position, SpawnLocation sl, bool visible = false)
+        {
+            Visible = visible;
+            ScreenValues.SickmanSpawnLocation = sl;
+            spriteEffects = (ScreenValues.SickmanSpawnLocation == SpawnLocation.Left) ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            dir = (spriteEffects == SpriteEffects.FlipHorizontally) ? Direction.Left : Direction.Right;
 
             Position = position;
             pixelWidth = 105;

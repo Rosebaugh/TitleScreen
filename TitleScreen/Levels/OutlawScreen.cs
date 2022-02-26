@@ -104,7 +104,7 @@ namespace TitleScreen.Levels
                         }
                     }
                 }
-                if (outlaw.item is Gun2)
+                if (outlaw.item is Gun2 && outlaw.animationFrame != 2)
                 {
                     og2 = (Gun2)outlaw.item;
 
