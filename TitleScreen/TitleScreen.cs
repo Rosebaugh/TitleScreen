@@ -1,7 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Microsoft.Xna.Framework.Media;
 using TitleScreen.Levels;
 using TitleScreen.Sprites;
 using TitleScreen.Sprites.Items;
@@ -21,6 +22,11 @@ namespace TitleScreen
         KeyboardState Previouskbs;
         GamePadState gps;
         KeyboardState kbs;
+
+        private SoundEffect backgroundMusicIntro;
+        private Song backgroundMusic;
+        float countDuration = 0;
+        float songTime = 0;
 
         public TitleScreen()
         {
@@ -46,7 +52,12 @@ namespace TitleScreen
             Pause.LoadContent(Content);
             Lose.LoadContent(Content);
             currentScreen.Initialize();
-            currentScreen.LoadContent(Content);
+            currentScreen.LoadContent(Content); ;
+            backgroundMusicIntro = Content.Load<SoundEffect>("OpeningPiano");
+            backgroundMusic = Content.Load<Song>("BackgroundMusicBody");
+            countDuration = 0;//backgroundMusicIntro.Duration.Seconds + .7f;
+            MediaPlayer.IsRepeating = false;
+            //backgroundMusicIntro.Play();
         }
         public bool EndOfScreen()
         {
@@ -108,6 +119,12 @@ namespace TitleScreen
 
         private void screenUpdate(GameTime gameTime, KeyboardState KBstate, GamePadState GPstate)
         {
+            songTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (songTime >= countDuration && !MediaPlayer.IsRepeating)
+            {
+                MediaPlayer.IsRepeating = true;
+                MediaPlayer.Play(backgroundMusic);
+            }
             currentScreen.Update(gameTime, KBstate, GPstate);
         }
 

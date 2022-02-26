@@ -25,6 +25,12 @@
 /processorParam:TextureFormat=Color
 /build:32x32-bat-sprite.png
 
+#begin BackgroundMusicBody.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:BackgroundMusicBody.wav
+
 #begin bangers.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -115,6 +121,12 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Man.png
+
+#begin OpeningPiano.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:OpeningPiano.wav
 
 #begin Pixel Saloon.png
 /importer:TextureImporter
