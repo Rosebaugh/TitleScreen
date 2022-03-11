@@ -169,7 +169,7 @@ namespace TitleScreen.Levels
                 Previousgps = GPstate;
                 Previouskbs = KBstate;
             }
-            else if(ScreenValues.State == ScreenValues.GameState.PauseMenu)
+            else if(ScreenValues.State == ScreenValues.GameState.PauseMenu && ScreenValues.tutorial == ScreenValues.Tutorial.PauseIt)
             {
                 ScreenValues.tutorial = ScreenValues.Tutorial.Completed;
             }

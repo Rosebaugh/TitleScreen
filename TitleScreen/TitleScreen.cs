@@ -231,10 +231,18 @@ namespace TitleScreen
 
             spriteBatch.End();
 
-            spriteBatch.Begin();
-            if (ScreenValues.State == ScreenValues.GameState.PauseMenu) Pause.Draw(spriteBatch);
-            else if (ScreenValues.State == ScreenValues.GameState.DeathScreen) Lose.Draw(spriteBatch);
-            spriteBatch.End();
+            if (ScreenValues.State == ScreenValues.GameState.PauseMenu)
+            {
+                spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Additive); //Get rid of stuff in this spritebatch.Begin
+                Pause.Draw(spriteBatch);
+                spriteBatch.End();
+            }
+            else if (ScreenValues.State == ScreenValues.GameState.DeathScreen)
+            {
+                spriteBatch.Begin();
+                Lose.Draw(spriteBatch);
+                spriteBatch.End();
+            }
 
             base.Draw(gameTime);
         }
