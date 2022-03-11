@@ -226,8 +226,6 @@ namespace TitleScreen.Levels
 
             stickman.Draw(gameTime, spriteBatch);
             foreach (var bat in bats) bat.Draw(gameTime, spriteBatch);
-            if (ScreenValues.State == ScreenValues.GameState.PauseMenu) Pause.Draw(spriteBatch);
-            else if (ScreenValues.State == ScreenValues.GameState.DeathScreen) Lose.Draw(spriteBatch);
         }
     }
 }

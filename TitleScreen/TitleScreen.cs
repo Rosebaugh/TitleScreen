@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System;
 using TitleScreen.Levels;
 using TitleScreen.Sprites;
 using TitleScreen.Sprites.Items;
@@ -27,6 +28,9 @@ namespace TitleScreen
         private Song backgroundMusic;
         float countDuration = 0;
         float songTime = 0;
+
+        int systemwidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        int systemheight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
 
         public TitleScreen()
         {
@@ -206,11 +210,30 @@ namespace TitleScreen
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            spriteBatch.Begin();
+            Matrix transform;
+            if (ScreenValues.GameState.DeathScreen == ScreenValues.State)
+            {
+                Random rand = new Random();
+                int xOffset = rand.Next(0, systemwidth / 12);// * (rand.Next(0, 1) * 2 - 1);
+                int yOffset = rand.Next(0, systemheight / 12);// * (rand.Next(0, 1) * 2 - 1);
+                //
+                //
+                //int zOffset = (rand.Next(0, 1) * 2 - 1);
+                transform = Matrix.CreateTranslation(xOffset * 0.1f, yOffset * 0.1f, 0);
+            }
+            else
+            {
+                transform = Matrix.CreateTranslation(0, 0, 0);
+            }
+            spriteBatch.Begin(transformMatrix: transform);
 
             currentScreen.Draw(gameTime);
 
+            spriteBatch.End();
+
+            spriteBatch.Begin();
+            if (ScreenValues.State == ScreenValues.GameState.PauseMenu) Pause.Draw(spriteBatch);
+            else if (ScreenValues.State == ScreenValues.GameState.DeathScreen) Lose.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
