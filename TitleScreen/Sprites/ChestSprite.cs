@@ -51,7 +51,7 @@ namespace TitleScreen.Sprites
 
                     break;
                 case Treasure.Gun:
-                    content = new Gun2(new Vector2(Position.X + pixelWidth / 2, Position.Y - 35)) { BulletCount = 11 };
+                    content = new Gun2(new Vector2(Position.X + pixelWidth / 2, Position.Y - 35)) { BulletCount = 11, ItemFloor = 400 };
                     break;
                 case Treasure.Coin:
 

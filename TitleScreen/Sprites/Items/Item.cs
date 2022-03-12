@@ -20,7 +20,7 @@ namespace TitleScreen.Sprites.Items
         /// </summary>
         //public Bounding Bounds => bounds;
 
-        protected int floor = 400;
+        public int ItemFloor = ScreenValues.ScreenHeight - 50;
 
         public bool falling = true;
 
@@ -75,11 +75,11 @@ namespace TitleScreen.Sprites.Items
             {
                 position.X = 30;
             }
-            if (position.Y >= floor && acceleration.Y >= 0)
+            if (position.Y >= ItemFloor && acceleration.Y >= 0)
             {
                 acceleration = new Vector2(0, 0);
                 falling = false;
-                return new Vector2(position.X, floor);
+                return new Vector2(position.X, ItemFloor);
             }
 
             return position;
