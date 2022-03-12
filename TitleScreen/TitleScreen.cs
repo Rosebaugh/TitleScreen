@@ -214,11 +214,11 @@ namespace TitleScreen
             if (ScreenValues.GameState.DeathScreen == ScreenValues.State)
             {
                 Random rand = new Random();
-                int xOffset = rand.Next(0, ScreenValues.ScreenWidth / 12);// * (rand.Next(0, 1) * 2 - 1);
-                int yOffset = rand.Next(0, ScreenValues.ScreenHeight / 12);// * (rand.Next(0, 1) * 2 - 1);
+                int xOffset = rand.Next(0, ScreenValues.ScreenWidth / 12);// * (rand.Next(0, 2) * 2 - 1);
+                int yOffset = rand.Next(0, ScreenValues.ScreenHeight / 12);// * (rand.Next(0, 2) * 2 - 1);
                 //
                 //
-                //int zOffset = (rand.Next(0, 1) * 2 - 1);
+                //int zOffset = (rand.Next(0, 12) * 2 - 1);
                 transform = Matrix.CreateTranslation(xOffset * 0.1f, yOffset * 0.1f, 0);
             }
             else

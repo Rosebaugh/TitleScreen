@@ -87,7 +87,7 @@ namespace TitleScreen.Content
             {
                 var source = new Rectangle(0, 0, pixelWidth, pixelHeight);
                 SpriteEffects spriteEffect = (dir == Direction.Left) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-                spriteBatch.Draw(texture, Position, source, Color.White, 0, new Vector2(0, 0), 1, spriteEffect, 0);
+                spriteBatch.Draw(texture, Position, source, Color.White, rotation, new Vector2(0, 0), 1, spriteEffect, 0);
             }
         }
     }

@@ -172,7 +172,7 @@ namespace TitleScreen.Sprites
                         item.Update(gameTime);
                     }
                 }
-                if (animationFrame == 2)
+                if (animationFrame == 2 && dropItems != null)
                 {
                     foreach (Item i in dropItems)
                     {
@@ -205,7 +205,7 @@ namespace TitleScreen.Sprites
                     item.Draw(gameTime, spriteBatch);
                 }
 
-                if(animationFrame == 2 && !ItemsDropped)
+                if(animationFrame == 2 && !ItemsDropped && dropItems != null)
                 {
                     ItemsDropped = true;
                     foreach (Item i in dropItems)
@@ -218,7 +218,7 @@ namespace TitleScreen.Sprites
                         }
                     }
                 }
-                else if(animationFrame == 2)
+                else if(animationFrame == 2 && dropItems != null)
                 {
                     foreach (Item i in dropItems)
                     {

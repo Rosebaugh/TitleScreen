@@ -59,6 +59,7 @@ namespace TitleScreen.Levels
             foreach (var bat in bats) bat.LoadContent(Content);
             chest.LoadContent(Content);
             outlaw.LoadContent(Content);
+            outlaw.dropItems = null;
         }
 
         public void DontLetLeave()

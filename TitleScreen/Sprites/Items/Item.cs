@@ -14,11 +14,11 @@ namespace TitleScreen.Sprites.Items
     {
         public SpriteEffects spriteEffect;
         protected Bounding bounds;
-        public Bounding Bounds => bounds;
+
         /// <summary>
         /// The bounding volume of the sprite
         /// </summary>
-        //public Bounding Bounds => bounds;
+        public Bounding Bounds => bounds;
 
         public int ItemFloor = ScreenValues.ScreenHeight - 50;
 
@@ -27,6 +27,9 @@ namespace TitleScreen.Sprites.Items
         Vector2 velocity;
         Vector2 acceleration;
         float accelerationTimer;
+        protected float rotation = 0;
+        protected short rotationdir = 0;
+        protected float rotationspeed = 0;
 
         protected int direction;
         public void Spawn()
@@ -36,6 +39,9 @@ namespace TitleScreen.Sprites.Items
             velocity = new Vector2(rand.Next(5, 25) * direction, -10 * rand.Next(4, 16));
             acceleration = new Vector2(0, -100);
             accelerationTimer = (float).25;
+            rotationdir = (short)(rand.Next(0, 2) * 2 - 1);
+            rotationspeed = (float)rand.NextDouble() * 2;
+
         }
         public bool collides(Bounding item)
         {
@@ -62,6 +68,17 @@ namespace TitleScreen.Sprites.Items
 
             float t = (float)gameTime.ElapsedGameTime.TotalSeconds;
             accelerationTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if(rotation > MathHelper.TwoPi)
+            {
+                rotation -= MathHelper.TwoPi;
+            }
+            else if (rotation < 0)
+            {
+                rotation += MathHelper.TwoPi;
+            }
+
+            rotation += MathHelper.TwoPi * (float)gameTime.ElapsedGameTime.TotalSeconds * rotationdir * rotationspeed;
 
             if (accelerationTimer < 0)
             {
