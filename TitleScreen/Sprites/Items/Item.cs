@@ -6,17 +6,19 @@ using System.Collections.Generic;
 using System.Text;
 
 using TitleScreen.Collisions;
+using TitleScreen.Content;
 
 namespace TitleScreen.Sprites.Items
 {
     public abstract class Item : Sprite
     {
         public SpriteEffects spriteEffect;
-        protected BoundingCircle bounds;
+        protected Bounding bounds;
+        public Bounding Bounds => bounds;
         /// <summary>
         /// The bounding volume of the sprite
         /// </summary>
-        public BoundingCircle Bounds => bounds;
+        //public Bounding Bounds => bounds;
 
         protected int floor = 400;
 
@@ -34,6 +36,21 @@ namespace TitleScreen.Sprites.Items
             velocity = new Vector2(rand.Next(5, 25) * direction, -10 * rand.Next(4, 16));
             acceleration = new Vector2(0, -100);
             accelerationTimer = (float).25;
+        }
+        public bool collides(Bounding item)
+        {
+            if (this is Bullet b)
+            {
+                return b.Bounds.CollidesWith(item);
+            }
+            else if (this is Gun2 g)
+            {
+                return g.Bounds.CollidesWith(item);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public Vector2 updateFallVector(GameTime gameTime, Vector2 position)

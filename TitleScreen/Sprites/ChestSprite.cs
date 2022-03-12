@@ -19,15 +19,24 @@ namespace TitleScreen.Sprites
         public Treasure contents;
         public Item content;
 
-        private BoundingRectangle bounds;
+        private Bounding bounds;
 
         public short animationFrame;
 
         /// <summary>
         /// The bounding volume of the sprite
         /// </summary>
-        public BoundingRectangle Bounds => bounds;
-
+        public BoundingRectangle Bounds
+        {
+            get
+            {
+                return (BoundingRectangle)bounds;
+            }
+            set
+            {
+                bounds = value;
+            }
+        }
         public ChestSprite(Vector2 position, Treasure contentt)
         {
             animationFrame = 0;
@@ -42,7 +51,7 @@ namespace TitleScreen.Sprites
 
                     break;
                 case Treasure.Gun:
-                    content = new Gun2(new Vector2(Position.X + pixelWidth / 2, Position.Y - 35));
+                    content = new Gun2(new Vector2(Position.X + pixelWidth / 2, Position.Y - 35)) { BulletCount = 11 };
                     break;
                 case Treasure.Coin:
 

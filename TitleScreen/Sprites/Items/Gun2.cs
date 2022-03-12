@@ -16,7 +16,17 @@ namespace TitleScreen.Sprites.Items
     public class Gun2 : Item
     {
         public Bullet[] bullets;
+        public int BulletCount;
         private SoundEffect shoot;
+        public BoundingCircle Bounds 
+        { 
+            get{
+                return (BoundingCircle)bounds;
+            }
+            set{
+                bounds = value;
+            }
+        }
         public Gun2(Vector2 position)
         {
             Position = position;
@@ -46,15 +56,19 @@ namespace TitleScreen.Sprites.Items
 
         public void Shoot()
         {
-            foreach (Bullet bullet in bullets)
+            if(BulletCount > 0)
             {
-                if (!bullet.Visible)
+                foreach (Bullet bullet in bullets)
                 {
-                    bullet.Visible = true;
-                    shoot.Play();
-                    bullet.Position = (spriteEffect == SpriteEffects.FlipHorizontally) ? new Vector2(Position.X, Position.Y - 13) : new Vector2(Position.X + pixelWidth, Position.Y - 13);
-                    bullet.dir = (spriteEffect == SpriteEffects.None) ? Direction.Left : Direction.Right;
-                    return;
+                    if (!bullet.Visible)
+                    {
+                        bullet.Visible = true;
+                        shoot.Play();
+                        bullet.Position = (spriteEffect == SpriteEffects.FlipHorizontally) ? new Vector2(Position.X, Position.Y - 13) : new Vector2(Position.X + pixelWidth, Position.Y - 13);
+                        bullet.dir = (spriteEffect == SpriteEffects.None) ? Direction.Left : Direction.Right;
+                        BulletCount--;
+                        return;
+                    }
                 }
             }
         }
@@ -64,7 +78,9 @@ namespace TitleScreen.Sprites.Items
             foreach (Bullet bullet in bullets) bullet.Update(gameTime);
 
             Position = this.updateFallVector(gameTime, Position);
-            bounds.Center = Position + new Vector2((pixelWidth + 8) / 2, (pixelWidth + 8) / 2);
+            BoundingCircle temp = (BoundingCircle)bounds;
+            temp.Center = Position + new Vector2((pixelWidth + 8) / 2, (pixelWidth + 8) / 2);
+            Bounds = temp;
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

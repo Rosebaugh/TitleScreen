@@ -205,6 +205,7 @@ namespace TitleScreen.Levels
                 }
                 else if (ScreenValues.Tutorial.Shoot == ScreenValues.tutorial)
                 {
+                    spriteBatch.DrawString(bangers, "<--  Number of bullets are shown here", new Vector2(50, 10), Color.Red, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
                     spriteBatch.DrawString(bangers, "Shoot by pressing the Space bar or Right Trigger", new Vector2(25, 120), Color.Red, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
                     chest.Draw(gameTime, spriteBatch);
                 }

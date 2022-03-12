@@ -16,8 +16,9 @@ namespace TitleScreen
         private SpriteBatch spriteBatch;
 
         public StickmanSprite Stickman;
-
         private Screen currentScreen;
+
+        static SpriteFont bangers;
 
         GamePadState Previousgps;
         KeyboardState Previouskbs;
@@ -28,9 +29,6 @@ namespace TitleScreen
         private Song backgroundMusic;
         float countDuration = 0;
         float songTime = 0;
-
-        int systemwidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-        int systemheight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
 
         public TitleScreen()
         {
@@ -62,6 +60,8 @@ namespace TitleScreen
             countDuration = 0;//backgroundMusicIntro.Duration.Seconds + .7f;
             MediaPlayer.IsRepeating = false;
             //backgroundMusicIntro.Play();
+
+            bangers = Content.Load<SpriteFont>("bangers");
         }
         public bool EndOfScreen()
         {
@@ -214,8 +214,8 @@ namespace TitleScreen
             if (ScreenValues.GameState.DeathScreen == ScreenValues.State)
             {
                 Random rand = new Random();
-                int xOffset = rand.Next(0, systemwidth / 12);// * (rand.Next(0, 1) * 2 - 1);
-                int yOffset = rand.Next(0, systemheight / 12);// * (rand.Next(0, 1) * 2 - 1);
+                int xOffset = rand.Next(0, ScreenValues.ScreenWidth / 12);// * (rand.Next(0, 1) * 2 - 1);
+                int yOffset = rand.Next(0, ScreenValues.ScreenHeight / 12);// * (rand.Next(0, 1) * 2 - 1);
                 //
                 //
                 //int zOffset = (rand.Next(0, 1) * 2 - 1);
@@ -225,11 +225,18 @@ namespace TitleScreen
             {
                 transform = Matrix.CreateTranslation(0, 0, 0);
             }
+
             spriteBatch.Begin(transformMatrix: transform);
 
             currentScreen.Draw(gameTime);
 
+            if (ScreenValues.State != ScreenValues.GameState.TitleScreen && Stickman.item != null)
+            {
+                spriteBatch.DrawString(bangers, ((Gun2)Stickman.item).BulletCount.ToString(), new Vector2(10, 10), Color.Gold, 0, new Vector2(0, 0), .5f, SpriteEffects.None, 0);
+            }
+
             spriteBatch.End();
+
 
             if (ScreenValues.State == ScreenValues.GameState.PauseMenu)
             {
@@ -243,7 +250,7 @@ namespace TitleScreen
                 Lose.Draw(spriteBatch);
                 spriteBatch.End();
             }
-
+            
             base.Draw(gameTime);
         }
     }

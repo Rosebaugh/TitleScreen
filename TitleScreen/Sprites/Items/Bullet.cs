@@ -13,12 +13,21 @@ namespace TitleScreen.Content
 {
     public class Bullet : Item
     {
-        private BoundingRectangle bounds;
 
         /// <summary>
         /// The bounding volume of the sprite
         /// </summary>
-        public BoundingRectangle Bounds => bounds;
+        public BoundingRectangle Bounds
+        {
+            get
+            {
+                return (BoundingRectangle)bounds;
+            }
+            set
+            {
+                bounds = value;
+            }
+        }
 
         public bool Visible = false;
         public bool shoot = true;
@@ -29,11 +38,12 @@ namespace TitleScreen.Content
             pixelHeight = 40;
             falling = false;
             Position = new Vector2(100, 100);
+            this.bounds = new BoundingRectangle(Position, pixelWidth, pixelHeight);
         }
 
-        public bool collides(BoundingRectangle s)
+        public bool collides(BoundingRectangle item)
         {
-            return CollisionHelper.Collides(s, Bounds);
+            return CollisionHelper.Collides(item, Bounds);
         }
 
 
@@ -43,11 +53,11 @@ namespace TitleScreen.Content
         }
         public void EndOfScreen()
         {
-            if (Position.X + pixelWidth + 15> ScreenValues.ScreenWidth)
+            if (Position.X - 15> ScreenValues.ScreenWidth)
             {
                 Visible = false;
             }
-            else if (Position.X - 15 < 0)
+            else if (Position.X - 15 + pixelWidth < 0)
             {
                 Visible = false;
             }
@@ -60,12 +70,16 @@ namespace TitleScreen.Content
             {
                 int Offset = (dir == Direction.Left) ? -1 : 1;
                 Position += new Vector2((float)(600 * Offset * gameTime.ElapsedGameTime.TotalSeconds), 0); 
-                this.bounds = new BoundingRectangle(Position, pixelWidth, pixelHeight);
+                //this.bounds = new BoundingRectangle(Position, pixelWidth, pixelHeight);
             }
             else if(Visible && !shoot)
             {
                 Position = this.updateFallVector(gameTime, Position);
             }
+            BoundingRectangle temp = (BoundingRectangle)bounds;
+            temp.X = Position.X;
+            temp.Y = Position.Y;
+            Bounds = temp;
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

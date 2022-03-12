@@ -11,7 +11,7 @@ namespace TitleScreen.Collisions
     /// <summary>
     /// A struct representing circular bounds
     /// </summary>
-    public struct BoundingRectangle
+    public struct BoundingRectangle  : Bounding
     {
         public float X;
         public float Y;
@@ -51,6 +51,17 @@ namespace TitleScreen.Collisions
         }
 
         /// <summary>
+        /// Detects a collision between two Bounding items
+        /// </summary>
+        /// <param name="other">The other bounding items</param>
+        /// <returns>true = collision, false = no collison</returns>
+        public bool CollidesWith(Bounding other)
+        {
+            return CollisionHelper.Collides(this, other);
+        }
+
+        /*
+        /// <summary>
         /// Detects a collision between two BoundingCircles
         /// </summary>
         /// <param name="other">The other bounding circle</param>
@@ -69,5 +80,6 @@ namespace TitleScreen.Collisions
         {
             return CollisionHelper.Collides(this, other);
         }
+        */
     }
 }

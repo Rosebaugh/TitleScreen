@@ -135,6 +135,24 @@ namespace TitleScreen.Levels
                         }
                     }
                 }
+                if (outlaw.animationFrame == 2)
+                {
+                    foreach (Item item in outlaw.dropItems)
+                    {
+                        if (item.collides(stickman.Bounds))
+                        {
+                            if (item is Bullet b)
+                            {
+                                if (b.Visible)
+                                {
+                                    ((Gun2)stickman.item).BulletCount++;
+                                    //outlaw.Hit();
+                                    b.Visible = false;
+                                }
+                            }
+                        }
+                    }
+                }
                 outlaw.Update(gameTime);
                 Previousgps = GPstate;
                 Previouskbs = KBstate;

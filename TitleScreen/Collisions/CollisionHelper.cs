@@ -60,5 +60,44 @@ namespace TitleScreen.Collisions
         /// <param name="c">The BoundingCircle</param>
         /// <returns>true = collision, false = no collison</returns>
         public static bool Collides(BoundingRectangle r, BoundingCircle c) => Collides(c, r);
+
+        public static bool Collides(Bounding a, Bounding b)
+        {
+            if (a is BoundingCircle abc)
+            {
+                if (b is BoundingCircle bbc)
+                {
+                    return Collides(abc, bbc);
+                }
+                else if (b is BoundingRectangle bbr)
+                {
+                    return Collides(abc, bbr);
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+            else if (a is BoundingRectangle abr)
+            {
+
+                if (b is BoundingCircle bbc)
+                {
+                    return Collides(abr, bbc);
+                }
+                else if (b is BoundingRectangle bbr)
+                {
+                    return Collides(abr, bbr);
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

@@ -124,7 +124,7 @@ namespace TitleScreen.Sprites
             Direction = ManDirection.Right;
             lastdir = gunxdir;
             Direction = temp;
-            item = new Gun2(new Vector2(0, 0));
+            item = new Gun2(new Vector2(0, 0)) { BulletCount = 10 };
             item.LoadContent(content);
             item.falling = false;
         }
